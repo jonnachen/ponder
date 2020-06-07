@@ -1,117 +1,75 @@
 import 'package:flutter/material.dart';
-void main() => runApp(MyApp());
+import 'personaljournal.dart';
+import 'calendar.dart';
+import 'homepage.dart';
+import 'articles.dart';
 
-class MyApp extends StatelessWidget{
+void main(){
+  runApp(
+    MyApp()
+  );
+}
+
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
-    return MaterialApp (
-        theme:ThemeData(primaryColor:Colors.green[500]),
-        home: HomeScreen());
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      home: MyBottomNavigationBar()
+    );
+  }
+}
+
+class MyBottomNavigationBar extends StatefulWidget {
+  @override
+  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
+}
+
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    Homepage(),
+    Journal(),
+    Calendar(),
+    Articles(),
+  ];
+
+  void onTappedBar(int index)
+  {
+    setState((){
+      _currentIndex = index;
+    });
   }
 
-}
-
-class HomeScreen extends StatefulWidget{
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen>{
-  int currentIndex = 0;
-  Widget childWidget = ChildWidget(
-    number: AvailableNumber.First,
-  );
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text("Ponder", style: TextStyle(color: Colors.white)),
-        centerTitle: true),
+    return new Scaffold(
+      body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.green[600],
         unselectedItemColor: Colors.grey[500],
-        currentIndex: currentIndex,
-        onTap: (value) {
-          currentIndex = value;
-
-          switch (value) {
-            case 0:
-              childWidget = ChildWidget(number: AvailableNumber.First);
-              break;
-            case 1:
-              childWidget = ChildWidget(number: AvailableNumber.Second);
-              break;
-            case 2:
-              childWidget = ChildWidget(number: AvailableNumber.Third);
-              break;
-            case 3:
-              childWidget = ChildWidget(number: AvailableNumber.Forth);
-              break;
-          }
-
-          setState(() {});
-        },
+        onTap: onTappedBar,
+        currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home"),
+            icon: new Icon(Icons.home),
+            title: new Text("Home")
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            title: Text("Journal"),
+              icon: new Icon(Icons.book),
+              title: new Text("Journal")
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            title: Text("Mood Tracker"),
+              icon: new Icon(Icons.calendar_today),
+              title: new Text("Calendar")
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            title: Text("Articles"),
+              icon: new Icon(Icons.dashboard),
+              title: new Text("Archive")
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: SafeArea(
-          child: childWidget,
-        ),
-      ),
     );
   }
 }
-
-class ChildWidget extends StatelessWidget {
-  final AvailableNumber number;
-
-  const ChildWidget({Key key, this.number}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    String file = "";
-    if (number == AvailableNumber.First) {
-      file = "first";
-    } else if (number == AvailableNumber.Second) {
-      file = "second";
-    } else if (number == AvailableNumber.Third){
-      file = "third";
-    } else {
-      file = "forth";
-    }
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          "$file screen",
-          style: TextStyle(fontSize: 36.0),
-        ),
-      ],
-    );
-  }
-}
-
-enum AvailableNumber { First, Second, Third, Forth }
-
-
 
