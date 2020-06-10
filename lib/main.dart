@@ -10,7 +10,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(home: MyBottomNavigationBar());
+    return new MaterialApp(
+        title: 'Ponder',
+        theme: ThemeData(fontFamily: 'SF Pro'),
+        home: MyBottomNavigationBar());
   }
 }
 
