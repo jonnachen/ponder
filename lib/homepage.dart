@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
   @override
-  _HomepageState createState() => _HomepageState();
+  _AddEntryView createState() => _AddEntryView();
 }
 
-class _HomepageState extends State<Homepage> {
+class _AddEntryView extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +81,14 @@ class _HomepageState extends State<Homepage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    //store entry here
+                    //navigate to new page
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => _ArticleView()));
+                  },
                   color: Colors.white,
                   textColor: Color(0xff1A782E),
                   child: Padding(
@@ -90,5 +97,94 @@ class _HomepageState extends State<Homepage> {
                 ))
           ],
         ));
+  }
+}
+
+class _ArticleView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Color(0xFFD4FFFF),
+        body: Stack(
+          children: <Widget>[
+            ListView(children: <Widget>[
+              Container(
+                  height: 155.0,
+                  child: Stack(
+                    children: <Widget>[
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: 32, top: 33, right: 32),
+                          child: ListView(
+                            children: <Widget>[
+                              Text("Here\'s your article of the day!",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold)),
+                              Text("Live Long and Prosper",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 20.0)),
+                              Text("- Star Trek Guy",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 20.0))
+                            ],
+                          )),
+                      Positioned(
+                          left: 272,
+                          bottom: 0,
+                          child:
+                              Image(image: AssetImage('img/article_leaf.png')))
+                    ],
+                  )),
+              Container(
+                  color: Color(0xFFFAF3DD),
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 32, top: 28, bottom: 20),
+                      child: Text("{Article Name Here}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 36.0,
+                              color: Color(0XFF5E6472))))),
+              Container(
+                  color: Colors.white,
+                  height: 600.0,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 40, top: 30, right: 40),
+                      child: Text(
+                          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,  Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minim",
+                          style: TextStyle(fontSize: 20.0, height: 1.3))))
+            ]),
+            Positioned(
+                right: 40,
+                bottom: 70,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  onPressed: () {
+                    //store entry here
+                    //navigate to new page
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => _EndView()));
+                  },
+                  color: Colors.white,
+                  textColor: Color(0xff1A782E),
+                  child: Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text("Next", style: TextStyle(fontSize: 25.0))),
+                ))
+          ],
+        ));
+  }
+}
+
+class _EndView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFFD4FFFF),
+      // to fill out
+    );
   }
 }
