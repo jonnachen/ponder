@@ -53,14 +53,11 @@ class _HomepageState extends State<Homepage> {
                       children: <Widget>[
                         Padding(
                             padding: EdgeInsets.only(bottom: 10.0),
-                            child: Text('{Title Here}',
+                            child: Text('{Date Here} | {Time Here}',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 40.0))),
-                        Text('{Date Here} | {Time here}',
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 16.0)),
+                                    fontSize: 30.0))),
                         Container(
                             width: 300.0,
                             height: 400.0,
