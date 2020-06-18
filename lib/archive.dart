@@ -86,7 +86,8 @@ class _ArchiveState extends State<Archive> {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height - 150,
+                  height: 600,
+                  padding:EdgeInsets.only(bottom: 200),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -94,70 +95,79 @@ class _ArchiveState extends State<Archive> {
                           topRight: Radius.circular(30.0))),
                   child: ListView(
                     children:[
-                      Positioned(
-                        left:0,
-                        top:80,
-                        child: new Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            image:DecorationImage(
-                              image: AssetImage('images/capture.png'),
+                      Container(
+                        padding: EdgeInsets.only(top:15,left:15),
+                        child: ListView(
+                          children: [
+                            Text("January",
+                              style: TextStyle(
+                                color: Color(0xFF525764),
+                                fontWeight: FontWeight.bold,
+                                fontSize:40.0,
+                              ),
                             ),
-                          ),
-                          child: FlatButton(
-                            padding: EdgeInsets.all(0.0),
-                            onPressed: (){},
-                            child: null,
-                          ),
+                            FlatButton(
+                              onPressed:(){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => _ArticleView()));
+                              },
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(10.0),
+                                      topRight: Radius.circular(10.0)),
+                                  image: DecorationImage(
+                                    image: AssetImage('img/capture.png'),
+                                  ),
+                                ),
+                              ),
+                            ),
 
+
+                          ],
+                        ),
+                        width: 200,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFC2F9BB),
                         ),
                       ),
-
-//                      Positioned(
-//                        right: 20,
-//                        bottom: 10,
-//                        child: new Container(
-//                        width: 100,
-//                        height: 100,
-//                        decoration: BoxDecoration(
-//                          image: DecorationImage(
-//                              image:AssetImage('images/capture.png')
-//                          ),
-//                        ),
-//                        child: FlatButton(
-//                          padding: EdgeInsets.all(0.0),
-//                          onPressed: (){},
-//                          child: null,
-//                        ),
-//
-//                      ),
-//                      ),
-//
-//                      Positioned(
-//                        child: new Container(
-//                          width: 100,
-//                          height: 100,
-//                          decoration: BoxDecoration(
-//                            image: DecorationImage(
-//                                image:AssetImage('images/capture.png')
-//                            ),
-//                          ),
-//                          child: FlatButton(
-//                            padding: EdgeInsets.all(0.0),
-//                            onPressed: (){},
-//                            child: null,
-//                          ),
-//
-//                        ),
-//                      ),
-
-
-
+                      Container(
+                        padding: EdgeInsets.only(top:15,left:15),
+                        child: Text("February",
+                          style: TextStyle(
+                            color: Color(0xFF525764),
+                            fontWeight: FontWeight.bold,
+                            fontSize:40.0,
+                          ),
+                        ),
+                        width: 200,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFAED9E0),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:15,left:15),
+                        child: Text("March",
+                          style: TextStyle(
+                            color: Color(0xFF525764),
+                            fontWeight: FontWeight.bold,
+                            fontSize:40.0,
+                          ),
+                        ),
+                        width: 200,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFFED3D3),
+                        ),
+                      ),
                     ],
                   ),
-
-
                 ),
               ],
             ),
@@ -238,12 +248,88 @@ class _ArchiveState extends State<Archive> {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height - 150,
+                  height: 600,
+                  padding:EdgeInsets.only(bottom: 200),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30.0),
                           topRight: Radius.circular(30.0))),
+                  child: ListView(
+                    children:[
+                      Container(
+                        padding: EdgeInsets.only(top:15,left:15),
+                        child: ListView(
+                          children: [
+                            Text("January",
+                              style: TextStyle(
+                                color: Color(0xFF525764),
+                                fontWeight: FontWeight.bold,
+                                fontSize:40.0,
+                              ),
+                            ),
+                            FlatButton(
+                              onPressed:(){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => _ArticleView()));
+                              },
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(10.0),
+                                      topRight: Radius.circular(10.0)),
+                                  image: DecorationImage(
+                                    image: AssetImage('img/capture.png'),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+
+                          ],
+                        ),
+                        width: 200,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFC2F9BB),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:15,left:15),
+                        child: Text("February",
+                          style: TextStyle(
+                            color: Color(0xFF525764),
+                            fontWeight: FontWeight.bold,
+                            fontSize:40.0,
+                          ),
+                        ),
+                        width: 200,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFAED9E0),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:15,left:15),
+                        child: Text("March",
+                          style: TextStyle(
+                            color: Color(0xFF525764),
+                            fontWeight: FontWeight.bold,
+                            fontSize:40.0,
+                          ),
+                        ),
+                        width: 200,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFFED3D3),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -254,11 +340,119 @@ class _ArchiveState extends State<Archive> {
   }
 }
 
-class journalImageAsset extends StatelessWidget{
+class _ArticleView extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
-    AssetImage assetImage = AssetImage('images/capture.png');
-    Image image = Image(image: assetImage);
-    return Container(child: image,);
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Color(0xFFD4FFFF),
+        body: Stack(
+          children: <Widget>[
+            ListView(
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(left: 10, top: 32, right: 32),
+                    child: Container(
+                        height: 150.0,
+                        child: Stack(
+                          children: <Widget>[
+                            FlatButton(
+                              onPressed:(){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Archive()));
+                              },
+                              child: Positioned(
+                                child: Image(
+                                  width:34,
+                                  height:34,
+                                  image:AssetImage('img/arrow-01.png'),
+                                ),
+                              ),
+                            ),
+
+                            Positioned(
+                                bottom: 0.0,
+                                right: 40.0,
+                                child: Image(
+                                    width: 70,
+                                    height: 140,
+                                    image: AssetImage('img/transplant-01.png')))
+                          ],
+                        ))),
+                Container(
+                  height: MediaQuery.of(context).size.height - 150,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0))),
+                  child: ListView(
+                    children:[
+                      Padding(
+                        padding: EdgeInsets.only(top:30.0),
+                        child: Stack(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 1.0),
+                              child: Center(
+                                  child: Text('{Date Here}',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40.0))
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top:45, left:25),
+                              child:Text('{Time Here}',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight:FontWeight.bold,
+                                  fontSize:20,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top:80),
+                              child:Container(
+                                height:MediaQuery.of(context).size.height - 150,
+                                width: MediaQuery.of(context).size.width,
+                                decoration:BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30.0),
+                                        topRight: Radius.circular(30.0))
+                                ),
+                                child: Padding(
+                                  padding:EdgeInsets.only(top:15,left:10,right:10),
+                                  child:Text("Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,  Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minim",
+                                    style: TextStyle(
+                                        height:1.3,
+                                        fontSize:20.0
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ));
   }
 }
+
