@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
   @override
-  _AddEntryView createState() => _AddEntryView();
+  _HomepageState createState() => _HomepageState();
 }
 
-class _AddEntryView extends State<Homepage> {
+class _HomepageState extends State<Homepage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(backgroundColor: Color(0xFFD4FFFF), body: _AddEntryView());
+  }
+}
+
+class _AddEntryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,8 +190,82 @@ class _EndView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFD4FFFF),
-      // to fill out
-    );
+        backgroundColor: Color(0xFFD4FFFF),
+        body: Stack(
+          children: <Widget>[
+            ListView(children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(top: 30, left: 30, right: 30),
+                  child: Text("Today is January 13, 2020.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color(0xFF525764),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0))),
+              Padding(
+                  padding:
+                      EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 30),
+                  child: Text(
+                      "Hope you have a great day today! Feel free to write another entry.",
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(color: Color(0xFF525764), fontSize: 20.0))),
+              Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: Container(
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20.0),
+                              topRight: Radius.circular(20.0))),
+                      child: Center(
+                          child: Text("January 13, 2:04 am",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0))))),
+              Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 0),
+                  child: Container(
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                          color: Color(0xffFAF3DD),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20.0),
+                              bottomRight: Radius.circular(20.0))),
+                      child: Center(
+                          child: Text("Stress 101",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 18.0, color: Color(0xff5E6472)))))),
+              Padding(
+                padding: EdgeInsets.only(top: 30, left: 100, right: 100),
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => _AddEntryView()));
+                  },
+                  color: Colors.white,
+                  textColor: Color(0xff1A782E),
+                  child: Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text("Return to Home",
+                          style: TextStyle(fontSize: 20.0))),
+                ),
+              )
+            ]),
+            Positioned(
+                bottom: 0,
+                left: 280,
+                child: Image(image: AssetImage('img/article_leaf.png')))
+          ],
+        ));
   }
 }
