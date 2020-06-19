@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
   @override
-  _AddEntryState createState() => _AddEntryState();
+  _HomepageState createState() => _HomepageState();
 }
 
-class _AddEntryState extends State<Homepage> {
+class _HomepageState extends State<Homepage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(backgroundColor: Color(0xFFD4FFFF), body: _AddEntryView());
+  }
+}
+
+class _AddEntryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -240,14 +247,16 @@ class _EndView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   onPressed: () {
-                    //store entry here
-                    //navigate to new page
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => _AddEntryView()));
                   },
                   color: Colors.white,
                   textColor: Color(0xff1A782E),
                   child: Padding(
                       padding: EdgeInsets.all(15.0),
-                      child: Text("Add a New Entry",
+                      child: Text("Return to Home",
                           style: TextStyle(fontSize: 20.0))),
                 ),
               )
