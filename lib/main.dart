@@ -1,59 +1,74 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'homepage.dart';
 import 'archive.dart';
 import 'account.dart';
 
 void main() {
-  runApp(MyApp());
+  return runApp(CupertinoStoreApp());
 }
 
-class MyApp extends StatelessWidget {
+class CupertinoStoreApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-        title: 'Ponder',
-        theme: ThemeData(fontFamily: 'SF Pro'),
-        home: MyBottomNavigationBar());
+    // This app is designed only to work vertically, so we limit
+    // orientations to portrait up and down.
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+    return CupertinoApp(
+      home: CupertinoStoreHomePage(),
+    );
   }
 }
 
-class MyBottomNavigationBar extends StatefulWidget {
-  @override
-  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
-}
-
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  int _currentIndex = 0;
-  final List<Widget> _children = [
-    Homepage(),
-    Archive(),
-    Account(),
-  ];
-
-  void onTappedBar(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
+class CupertinoStoreHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Color(0xff52E3D2),
-        unselectedItemColor: Colors.grey[500],
-        onTap: onTappedBar,
-        currentIndex: _currentIndex,
-        items: [
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: new Icon(Icons.add), title: new Text("Add")),
+            icon: Icon(CupertinoIcons.add),
+            title: Text('Add'),
+          ),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.history), title: new Text("Archive")),
+            icon: Icon(CupertinoIcons.book),
+            title: Text('Archive'),
+          ),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.account_circle), title: new Text("Account")),
+            icon: Icon(CupertinoIcons.person),
+            title: Text('Account'),
+          ),
         ],
       ),
+      tabBuilder: (context, index) {
+        CupertinoTabView returnValue;
+        switch (index) {
+          case 0:
+            returnValue = CupertinoTabView(builder: (context) {
+              return CupertinoPageScaffold(
+                child: HomepageTab(),
+              );
+            });
+            break;
+          case 1:
+            returnValue = CupertinoTabView(builder: (context) {
+              return CupertinoPageScaffold(
+                child: ArchiveTab(),
+              );
+            });
+            break;
+          case 2:
+            returnValue = CupertinoTabView(builder: (context) {
+              return CupertinoPageScaffold(
+                child: AccountTab(),
+              );
+            });
+            break;
+        }
+        return returnValue;
+      },
     );
   }
 }

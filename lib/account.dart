@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Account extends StatefulWidget {
+class AccountTab extends StatefulWidget {
   @override
-  _AccountState createState() => _AccountState();
+  _AccountTabState createState() {
+    return _AccountTabState();
+  }
 }
 
-class _AccountState extends State<Account> {
+class _AccountTabState extends State<AccountTab> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
