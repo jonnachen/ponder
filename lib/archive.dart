@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'homepage.dart';
 
 class ArchiveTab extends StatefulWidget {
   @override
@@ -111,10 +112,13 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             ),
                             FlatButton(
                               onPressed: () {
-/*                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => _ArticleView())); */
+                                /* 
+                                Navigator.of(context)
+                                    .push(CupertinoPageRoute<void>(
+                                  builder: (BuildContext context) {
+                                    return _ArticleView();
+                                  },
+                                )); */
                               },
                               child: Container(
                                 height: 70,
@@ -274,10 +278,13 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             ),
                             FlatButton(
                               onPressed: () {
-/*                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => _ArticleView())); */
+                                /* 
+                                Navigator.of(context)
+                                    .push(CupertinoPageRoute<void>(
+                                  builder: (BuildContext context) {
+                                    return _ArticleView();
+                                  },
+                                )); */
                               },
                               child: Container(
                                 height: 70,

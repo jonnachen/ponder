@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'homepage.dart';
 import 'archive.dart';
 import 'account.dart';
@@ -27,19 +28,12 @@ class CupertinoStoreHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
+        activeColor: Color(0xFF3FCCCC),
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.add),
-            title: Text('Add'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.book),
-            title: Text('Archive'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person),
-            title: Text('Account'),
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.add)),
+          BottomNavigationBarItem(icon: Icon(Icons.book)),
+          BottomNavigationBarItem(icon: Icon(Icons.person)),
         ],
       ),
       tabBuilder: (context, index) {
