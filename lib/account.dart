@@ -19,9 +19,9 @@ class _AccountTabState extends State<AccountTab> {
           Container(
               color: Color(0xffFAF3DD),
               child: Padding(
-                  padding: EdgeInsets.only(top: 15, bottom: 10, left: 15),
+                  padding: EdgeInsets.only(top: 15, bottom: 10, left: 20),
                   child: Text(
-                    "Connie Liu",
+                    "{Username}",
                     style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class _AccountTabState extends State<AccountTab> {
                 width: 320,
                 height: 320,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(40.0),
+                  borderRadius: BorderRadius.circular(45.0),
                   child: Image.asset(
                     'img/plant_growth.png',
                     width: 320.0,
@@ -68,7 +68,7 @@ class _AccountTabState extends State<AccountTab> {
                   EdgeInsets.only(top: 15, left: 35, right: 35, bottom: 15),
               child: Container(
                   width: 360,
-                  height: 500,
+                  height: 530,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius:
