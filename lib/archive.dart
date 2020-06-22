@@ -112,7 +112,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
 
                             Container(
                               width: 200,
-                              height: 300,
+                              height: 230,
                               decoration: BoxDecoration(
                                 color: Color(0xFFC2F9BB),
                                 borderRadius: BorderRadius.only(
@@ -125,222 +125,15 @@ class _ArchiveTabState extends State<ArchiveTab> {
                               child: GridView.count(
                                 crossAxisCount: 3,
                                 children: <Widget>[
-                                  FlatButton(
-                                    onPressed:(){
-
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       ));
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                          image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  Journal(),
+                                  Journal(),
+                                  Journal(),
+                                  Journal(),
+                                  Journal(),
+                                  Journal(),
+                                  Journal(),
+                                  Journal(),
+                                  Journal(),
                                 ],
                               ),
                             ),
@@ -367,89 +160,22 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             ),
                             Container(
                               width:200,
-                              height:300,
+                              height:230,
                               decoration:BoxDecoration(
                                 color: Color(0xFFAED9E0),
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(30),
-                                  topRight: Radius.circular(30)
+                                  topRight: Radius.circular(30),
+                                  bottomRight: Radius.circular(30),
+                                  bottomLeft: Radius.circular(30)
                                 ),
                               ),
                               child: GridView.count(
                                 crossAxisCount:3,
                                 children: <Widget>[
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  Journal(),
+                                  Journal(),
+                                  Journal(),
                                 ],
                               ),
                             ),
@@ -475,42 +201,20 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             ),
                             Container(
                               width:200,
-                              height:300,
+                              height:230,
                               decoration:BoxDecoration(
                                 color: Color(0xFFFED3D3),
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30)
+                                    topRight: Radius.circular(30),
+                                    bottomRight: Radius.circular(30),
+                                    bottomLeft: Radius.circular(30)
                                 ),
                               ),
                               child: GridView.count(
                                 crossAxisCount:3,
                                 children: <Widget>[
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
+                                  Journal(),
                                 ],
                               ),
                             ),
@@ -623,7 +327,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
 
                             Container(
                               width: 200,
-                              height: 300,
+                              height: 230,
                               decoration: BoxDecoration(
                                 color: Color(0xFFC2F9BB),
                                 borderRadius: BorderRadius.only(
@@ -636,54 +340,8 @@ class _ArchiveTabState extends State<ArchiveTab> {
                               child: GridView.count(
                                 crossAxisCount: 3,
                                 children: <Widget>[
-                                  FlatButton(
-                                    onPressed:(){
-
-                                      Navigator.of(context)
-                                          .push(CupertinoPageRoute<void>(
-                                        builder: (BuildContext context) {
-                                          return _ArticleView();
-                                        },
-                                      ));
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  Journal(),
+                                  Journal(),
                                 ],
                               ),
                             ),
@@ -710,89 +368,22 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             ),
                             Container(
                               width:200,
-                              height:300,
+                              height:230,
                               decoration:BoxDecoration(
                                 color: Color(0xFFAED9E0),
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30)
+                                    topRight: Radius.circular(30),
+                                    bottomLeft: Radius.circular(30),
+                                    bottomRight: Radius.circular(30)
                                 ),
                               ),
                               child: GridView.count(
                                 crossAxisCount:3,
                                 children: <Widget>[
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  Journal(),
+                                  Journal(),
+                                  Journal(),
                                 ],
                               ),
                             ),
@@ -818,42 +409,20 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             ),
                             Container(
                               width:200,
-                              height:300,
+                              height:230,
                               decoration:BoxDecoration(
                                 color: Color(0xFFFED3D3),
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30)
+                                    topRight: Radius.circular(30),
+                                    bottomLeft: Radius.circular(30),
+                                    bottomRight: Radius.circular(30),
                                 ),
                               ),
                               child: GridView.count(
                                 crossAxisCount:3,
                                 children: <Widget>[
-                                  FlatButton(
-                                    onPressed:(){
-                                      /*
-                                       Navigator.of(context)
-                                           .push(CupertinoPageRoute<void>(
-                                         builder: (BuildContext context) {
-                                           return _ArticleView();
-                                         },
-                                       )); */
-                                    },
-                                    child:Container(
-                                      height:70,
-                                      width:70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                        image: DecorationImage(
-                                            image:AssetImage('img/Capture.png')
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
+                                  Journal(),
                                 ],
                               ),
                             ),
@@ -1027,4 +596,66 @@ class __ArticleViewState extends State<_ArticleView> {
     );
   }
 }
+
+class Journal extends StatefulWidget {
+  @override
+  _JournalState createState() => _JournalState();
+}
+
+class _JournalState extends State<Journal> {
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      onPressed:(){
+         Navigator.of(context)
+             .push(CupertinoPageRoute<void>(
+           builder: (BuildContext context) {
+             return _ArticleView();
+           },
+         ));
+      },
+      child: Stack(
+        children:<Widget>[
+          Container(
+            height:70,
+            width:70,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              image: DecorationImage(
+                  image:AssetImage('img/Capture.png')
+              ),
+            ),
+          ),
+          Positioned(
+            top:5,
+            left:15,
+
+            child: Text("10",
+              style: TextStyle(
+                color: Color(0xFF525764),
+                fontWeight: FontWeight.bold,
+                fontSize: 34.0,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 5,
+            left: 10,
+            child: Text("10:20 am",
+              style: TextStyle(
+                color: Color(0xFF525764),
+                fontWeight: FontWeight.bold,
+                fontSize: 13.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 
