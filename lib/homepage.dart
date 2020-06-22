@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Homepage extends StatefulWidget {
+class HomepageTab extends StatefulWidget {
   @override
-  _HomepageState createState() => _HomepageState();
+  _HomepageTabState createState() {
+    return _HomepageTabState();
+  }
 }
 
-class _HomepageState extends State<Homepage> {
+class _HomepageTabState extends State<HomepageTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Color(0xFFD4FFFF), body: _AddEntryView());
@@ -82,8 +85,8 @@ class _AddEntryView extends StatelessWidget {
               ],
             ),
             Positioned(
-                right: 40,
-                bottom: 40,
+                right: 30,
+                bottom: 20,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
@@ -91,10 +94,11 @@ class _AddEntryView extends StatelessWidget {
                   onPressed: () {
                     //store entry here
                     //navigate to new page
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => _ArticleView()));
+                    Navigator.of(context).push(CupertinoPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return _ArticleView();
+                      },
+                    ));
                   },
                   color: Colors.white,
                   textColor: Color(0xff1A782E),
@@ -110,9 +114,9 @@ class _AddEntryView extends StatelessWidget {
 class _ArticleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CupertinoPageScaffold(
         backgroundColor: Color(0xFFD4FFFF),
-        body: Stack(
+        child: Stack(
           children: <Widget>[
             ListView(children: <Widget>[
               Container(
@@ -127,14 +131,8 @@ class _ArticleView extends StatelessWidget {
                               Text("Here\'s your article of the day!",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: 25.0,
+                                      fontSize: 30.0,
                                       fontWeight: FontWeight.bold)),
-                              Text("Live Long and Prosper",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 20.0)),
-                              Text("- Star Trek Guy",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 20.0))
                             ],
                           )),
                       Positioned(
@@ -163,8 +161,8 @@ class _ArticleView extends StatelessWidget {
                           style: TextStyle(fontSize: 20.0, height: 1.3))))
             ]),
             Positioned(
-                right: 40,
-                bottom: 70,
+                right: 30,
+                bottom: 20,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
@@ -189,9 +187,9 @@ class _ArticleView extends StatelessWidget {
 class _EndView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CupertinoPageScaffold(
         backgroundColor: Color(0xFFD4FFFF),
-        body: Stack(
+        child: Stack(
           children: <Widget>[
             ListView(children: <Widget>[
               Padding(
@@ -211,21 +209,34 @@ class _EndView extends StatelessWidget {
                       style:
                           TextStyle(color: Color(0xFF525764), fontSize: 20.0))),
               Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  child: Container(
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20.0),
-                              topRight: Radius.circular(20.0))),
-                      child: Center(
-                          child: Text("January 13, 2:04 am",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0))))),
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: Container(
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0))),
+                  child: Center(
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(left: 50, right: 15),
+                            child: Image(
+                                width: 25,
+                                height: 25,
+                                image: AssetImage('img/star.png'))),
+                        Text("January 13, 2:04 am",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Padding(
                   padding: EdgeInsets.only(left: 20, right: 20, top: 0),
                   child: Container(
@@ -247,23 +258,24 @@ class _EndView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => _AddEntryView()));
+                    Navigator.of(context).push(CupertinoPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return _AddEntryView();
+                      },
+                    ));
                   },
                   color: Colors.white,
                   textColor: Color(0xff1A782E),
                   child: Padding(
                       padding: EdgeInsets.all(15.0),
-                      child: Text("Return to Home",
+                      child: Text("+ another entry",
                           style: TextStyle(fontSize: 20.0))),
                 ),
               )
             ]),
             Positioned(
                 bottom: 0,
-                left: 280,
+                left: 290,
                 child: Image(image: AssetImage('img/article_leaf.png')))
           ],
         ));
