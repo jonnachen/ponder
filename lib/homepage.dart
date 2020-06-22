@@ -1,21 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'classes/user.dart';
 
 class HomepageTab extends StatefulWidget {
+  final User user;
+
+  const HomepageTab({Key key, @required this.user}) : super(key: key);
+
   @override
   _HomepageTabState createState() {
-    return _HomepageTabState();
+    return _HomepageTabState(user);
   }
 }
 
 class _HomepageTabState extends State<HomepageTab> {
+  final User user;
+  _HomepageTabState(this.user);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Color(0xFFD4FFFF), body: _AddEntryView());
+    return Scaffold(
+        backgroundColor: Color(0xFFD4FFFF), body: _AddEntryView(user: user));
   }
 }
 
 class _AddEntryView extends StatelessWidget {
+  final User user;
+
+  const _AddEntryView({Key key, @required this.user}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +44,7 @@ class _AddEntryView extends StatelessWidget {
                         child: Stack(
                           children: <Widget>[
                             Positioned(
-                                child: Text('Hi {User}!',
+                                child: Text('Hi ${user.username}!',
                                     style: TextStyle(
                                         color: Color(0xFF525764),
                                         fontWeight: FontWeight.bold,

@@ -68,12 +68,7 @@ class _LoginState extends State<Login> {
       final jsonUser = jsonEncode(user);
       prefs.setString('user', jsonUser);
 
-      setState(() {
-        error = false;
-        loggedIn = true;
-      });
-
-      Navigator.pushNamed(context, '/home');
+      Navigator.pushNamed(context, '/home', arguments: user);
     }).catchError((err) {
       print(err);
       print("error :(");
