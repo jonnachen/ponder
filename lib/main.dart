@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'Login.dart';
 import 'archive.dart';
 import 'account.dart';
 import 'login.dart';
@@ -21,74 +19,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => Login(),
           // When navigating to the "/second" route, build the bottom navigation widget.
           '/home': (context) => MyBottomNavigationBar(),
-        }
-    );
-  }
-}
-
-class Login extends StatefulWidget {
-  @override
-  _LoginState createState() => _LoginState();
-}
-
-class _LoginState extends State<Login>{
-  bool loggedIn  = false;
-  TextEditingController nameController = TextEditingController();
-
-  @override
-  void initState(){
-    super.initState();
-    autoLogin();
-  }
-
-  void autoLogin() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String user = prefs.getString('user');
-
-    if (user != null){
-      setState(() {
-        loggedIn = true;
-        user;
-      });
-      return;
-    }
-  }
-
-  Future<Null> login(){
-    print("if I actually had this set up, this would log the  user in");
-  }
-
-  Future<Null> logout(){
-    print("if I actually had this set up, this would log the  user out");
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Auto Login Home Page'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            !loggedIn ? TextField(
-              textAlign: TextAlign.center,
-              controller: nameController,
-              decoration: InputDecoration(
-                  border: InputBorder.none, hintText: 'Please enter your name'),
-            ) : Text('You are logged in'),
-            SizedBox(height: 10.0),
-            RaisedButton(
-              onPressed: () {
-                loggedIn ? logout() : login();                
-              },
-              child: loggedIn ? Text('Logout') : Text('Login'),
-            )
-          ],
-        ),
-      ), 
-    );
+        });
   }
 }
 
@@ -100,7 +31,6 @@ class MyBottomNavigationBar extends StatefulWidget {
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    Login(),
     Archive(),
     Account(),
   ];

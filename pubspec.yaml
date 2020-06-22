@@ -29,8 +29,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
 
-  ## The following allows for storing datalocally.
+  # The following allows for storing datalocally.
   shared_preferences: ^0.5.1+2
+
+  # To make REST api requests to the backend
+  http: ^0.12.1
 
 dev_dependencies:
   flutter_test:
