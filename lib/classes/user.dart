@@ -16,11 +16,14 @@ class User {
     var jsonArticles = json['articles'] as List;
     List<Article> articles =
         jsonArticles.map((article) => Article.fromJson(article)).toList();
+    var jsonJournals = json['journals'] as List;
+    List<JournalEntry> journals =
+        jsonJournals.map((journal) => JournalEntry.fromJson(journal)).toList();
     return User(
         id: json['_id'],
         username: json['username'],
         articles: articles,
-        journals: [],
+        journals: journals,
         loginStreak:
             json['loginStreak'] != null ? int.parse(json['loginStreak']) : 0);
   }
@@ -33,7 +36,7 @@ class User {
       'articles':
           jsonEncode(articles.map((article) => jsonEncode(article)).toList()),
       'journals':
-          '[]', //jsonEncode(journals.map((journal) => jsonEncode(journal))),
+          jsonEncode(journals.map((journal) => jsonEncode(journal)).toList()),
       'loginStreak': '0' //jsonEncode(loginStreak)
     };
   }

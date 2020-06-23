@@ -36,7 +36,6 @@ class CupertinoStoreApp extends StatelessWidget {
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     final User user = ModalRoute.of(context).settings.arguments;
-    print(user);
 
     return CupertinoApp(home: CupertinoStoreHomePage(user: user));
   }
@@ -50,7 +49,6 @@ class CupertinoStoreHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(user);
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         activeColor: Color(0xFF3FCCCC),
