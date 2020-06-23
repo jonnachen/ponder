@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'classes/user.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'classes/user.dart';
+import 'classes/journalEntry.dart';
+import 'constants/routes.dart' as routes;
 import 'utils.dart' as utils;
 
 class HomepageTab extends StatefulWidget {
@@ -25,14 +30,50 @@ class _HomepageTabState extends State<HomepageTab> {
   }
 }
 
-class _AddEntryView extends StatelessWidget {
+class _AddEntryView extends StatefulWidget {
   final User user;
 
   const _AddEntryView({Key key, @required this.user}) : super(key: key);
+  @override
+  _AddEntryViewState createState() => _AddEntryViewState();
+}
+
+class _AddEntryViewState extends State<_AddEntryView> {
+  TextEditingController entryController = TextEditingController();
+  bool error = false;
+  bool loading = false;
+
+  createJournalEntry(user) async {
+    final text = entryController.text;
+    setState(() {
+      loading = true;
+    });
+
+    final http.Response response = await http.post(
+      routes.path + 'journals/',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'user': user.id,
+        'text': text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return JournalEntry.fromJson(json.decode(response.body)['journal']);
+    } else {
+      setState(() {
+        loading = false;
+        error = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final currentDate = DateTime.now();
+    final user = widget.user;
     return Scaffold(
         backgroundColor: Color(0xFFD4FFFF),
         body: Stack(
@@ -88,6 +129,7 @@ class _AddEntryView extends StatelessWidget {
                             width: 300.0,
                             height: 400.0,
                             child: TextField(
+                                controller: entryController,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 style: TextStyle(height: 1.6),
@@ -109,6 +151,7 @@ class _AddEntryView extends StatelessWidget {
                   ),
                   onPressed: () {
                     //store entry here
+                    createJournalEntry(user);
                     //navigate to new page
                     Navigator.of(context).push(CupertinoPageRoute<void>(
                       builder: (BuildContext context) {
