@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
         title: 'Ponder',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'SF Pro'),
         initialRoute: '/',
         routes: {
@@ -72,7 +73,7 @@ class CupertinoStoreHomePage extends StatelessWidget {
           case 1:
             returnValue = CupertinoTabView(builder: (context) {
               return CupertinoPageScaffold(
-                child: ArchiveTab(),
+                child: ArchiveTab(user: user),
               );
             });
             break;

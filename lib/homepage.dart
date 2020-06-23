@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'classes/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'classes/user.dart';
 import 'classes/journalEntry.dart';
+import 'classes/article.dart';
 import 'constants/routes.dart' as routes;
 import 'utils.dart' as utils;
 
@@ -43,7 +44,50 @@ class _AddEntryViewState extends State<_AddEntryView> {
   bool error = false;
   bool loading = false;
 
-  createJournalEntry(user) async {
+  final Map<String, double> intentStrengthes = {
+    'anger': 0.0,
+    'anxiety': 0.0,
+    'depression': 0.0,
+    'happy': 0.0,
+    'health': 0.0,
+    'productivity': 0.0,
+    'sleep': 0.0
+  };
+
+  double maxStrength = 0.0;
+  String strongestIntent = 'productivity';
+
+  updateStrength(intent) {
+    intentStrengthes[intent.name] =
+        intentStrengthes[intent.name] + intent.confidence;
+    if (intentStrengthes[intent.name] >= maxStrength) {
+      maxStrength = intentStrengthes[intent.name];
+      strongestIntent = intent.name;
+    }
+  }
+
+  getIntent(intents) {
+    intents.forEach((intent) => updateStrength(intent));
+    print(strongestIntent);
+    return strongestIntent;
+  }
+
+  Future<Article> getArticle(intentName, user) async {
+    String queryParams =
+        "?user=${user.id as String}&intentName=${intentName as String}";
+    final http.Response response = await http
+        .get(routes.path + 'articles/' + queryParams, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
+
+    if (response.statusCode == 200) {
+      return Article.fromJson(json.decode(response.body)['article']);
+    } else {
+      throw new Exception(json.decode(response.body)['error']);
+    }
+  }
+
+  Future<JournalEntry> createJournalEntry(user) async {
     final text = entryController.text;
     setState(() {
       loading = true;
@@ -67,6 +111,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
         loading = false;
         error = true;
       });
+      throw new Exception("Unable to submit journal entry.");
     }
   }
 
@@ -120,11 +165,11 @@ class _AddEntryViewState extends State<_AddEntryView> {
                         Padding(
                             padding: EdgeInsets.only(bottom: 10.0),
                             child: Text(
-                                '${utils.formatDate(currentDate)} | ${utils.formatTime(currentDate)}}',
+                                '${utils.formatDate(currentDate)} | ${utils.formatTime(currentDate)}',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 30.0))),
+                                    fontSize: 24.0))),
                         Container(
                             width: 300.0,
                             height: 400.0,
@@ -151,13 +196,20 @@ class _AddEntryViewState extends State<_AddEntryView> {
                   ),
                   onPressed: () {
                     //store entry here
-                    createJournalEntry(user);
-                    //navigate to new page
-                    Navigator.of(context).push(CupertinoPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return _ArticleView();
-                      },
-                    ));
+                    createJournalEntry(user).then((journalEntry) {
+                      //navigate to new page
+                      print("coffee");
+                      var intentName = getIntent(journalEntry.intents);
+
+                      getArticle(intentName, user).then((article) {
+                        print(article);
+                        Navigator.of(context).push(CupertinoPageRoute<void>(
+                          builder: (BuildContext context) {
+                            return _ArticleView(user: user, article: article);
+                          },
+                        ));
+                      });
+                    });
                   },
                   color: Colors.white,
                   textColor: Color(0xff1A782E),
@@ -171,6 +223,12 @@ class _AddEntryViewState extends State<_AddEntryView> {
 }
 
 class _ArticleView extends StatelessWidget {
+  final User user;
+  final Article article;
+
+  _ArticleView({Key key, @required this.user, @required this.article})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -190,7 +248,7 @@ class _ArticleView extends StatelessWidget {
                               Text("Here\'s your article of the day!",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: 30.0,
+                                      fontSize: 20.0,
                                       fontWeight: FontWeight.bold)),
                             ],
                           )),
@@ -205,19 +263,22 @@ class _ArticleView extends StatelessWidget {
                   color: Color(0xFFFAF3DD),
                   child: Padding(
                       padding: EdgeInsets.only(left: 32, top: 28, bottom: 20),
-                      child: Text("{Article Name Here}",
+                      child: Text("${article.title}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 36.0,
                               color: Color(0XFF5E6472))))),
               Container(
                   color: Colors.white,
-                  height: 600.0,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 40, top: 30, right: 40),
-                      child: Text(
-                          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,  Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minim",
-                          style: TextStyle(fontSize: 20.0, height: 1.3))))
+                  height: 2000.0,
+                  child: //ListView(children: <Widget>[
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: 20, top: 30, right: 20),
+                          child: WebView(
+                              initialUrl: article.url,
+                              javascriptMode: JavascriptMode.unrestricted))
+                  /*])*/)
             ]),
             Positioned(
                 right: 30,
@@ -228,6 +289,7 @@ class _ArticleView extends StatelessWidget {
                   ),
                   onPressed: () {
                     //store entry here
+
                     //navigate to new page
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => _EndView()));
