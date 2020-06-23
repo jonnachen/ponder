@@ -1,12 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'homepage.dart';
 import 'archive.dart';
 import 'account.dart';
+import 'homepage.dart';
+import 'login.dart';
+import 'classes/user.dart';
 
 void main() {
-  return runApp(CupertinoStoreApp());
+  return runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+        title: 'Ponder',
+        theme: ThemeData(fontFamily: 'SF Pro'),
+        initialRoute: '/',
+        routes: {
+          // When navigating to the "/" route, build the Login widget.
+          '/': (context) => Login(),
+          // When navigating to the "/second" route, build the bottom navigation widget.
+          '/home': (context) => CupertinoStoreApp(),
+        });
+  }
 }
 
 class CupertinoStoreApp extends StatelessWidget {
@@ -17,13 +35,18 @@ class CupertinoStoreApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    return CupertinoApp(
-      home: CupertinoStoreHomePage(),
-    );
+    final User user = ModalRoute.of(context).settings.arguments;
+
+    return CupertinoApp(home: CupertinoStoreHomePage(user: user));
   }
 }
 
 class CupertinoStoreHomePage extends StatelessWidget {
+  final User user;
+
+  const CupertinoStoreHomePage({Key key, @required this.user})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
@@ -42,7 +65,7 @@ class CupertinoStoreHomePage extends StatelessWidget {
           case 0:
             returnValue = CupertinoTabView(builder: (context) {
               return CupertinoPageScaffold(
-                child: HomepageTab(),
+                child: HomepageTab(user: user),
               );
             });
             break;

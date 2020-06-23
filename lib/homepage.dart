@@ -1,23 +1,79 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'classes/user.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'classes/user.dart';
+import 'classes/journalEntry.dart';
+import 'constants/routes.dart' as routes;
+import 'utils.dart' as utils;
 
 class HomepageTab extends StatefulWidget {
+  final User user;
+
+  const HomepageTab({Key key, @required this.user}) : super(key: key);
+
   @override
   _HomepageTabState createState() {
-    return _HomepageTabState();
+    return _HomepageTabState(user);
   }
 }
 
 class _HomepageTabState extends State<HomepageTab> {
+  final User user;
+  _HomepageTabState(this.user);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Color(0xFFD4FFFF), body: _AddEntryView());
+    return Scaffold(
+        backgroundColor: Color(0xFFD4FFFF), body: _AddEntryView(user: user));
   }
 }
 
-class _AddEntryView extends StatelessWidget {
+class _AddEntryView extends StatefulWidget {
+  final User user;
+
+  const _AddEntryView({Key key, @required this.user}) : super(key: key);
+  @override
+  _AddEntryViewState createState() => _AddEntryViewState();
+}
+
+class _AddEntryViewState extends State<_AddEntryView> {
+  TextEditingController entryController = TextEditingController();
+  bool error = false;
+  bool loading = false;
+
+  createJournalEntry(user) async {
+    final text = entryController.text;
+    setState(() {
+      loading = true;
+    });
+
+    final http.Response response = await http.post(
+      routes.path + 'journals/',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'user': user.id,
+        'text': text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return JournalEntry.fromJson(json.decode(response.body)['journal']);
+    } else {
+      setState(() {
+        loading = false;
+        error = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final currentDate = DateTime.now();
+    final user = widget.user;
     return Scaffold(
         backgroundColor: Color(0xFFD4FFFF),
         body: Stack(
@@ -31,7 +87,7 @@ class _AddEntryView extends StatelessWidget {
                         child: Stack(
                           children: <Widget>[
                             Positioned(
-                                child: Text('Hi {User}!',
+                                child: Text('Hi ${user.username}!',
                                     style: TextStyle(
                                         color: Color(0xFF525764),
                                         fontWeight: FontWeight.bold,
@@ -63,7 +119,8 @@ class _AddEntryView extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                             padding: EdgeInsets.only(bottom: 10.0),
-                            child: Text('{Date Here} | {Time Here}',
+                            child: Text(
+                                '${utils.formatDate(currentDate)} | ${utils.formatTime(currentDate)}}',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -72,6 +129,7 @@ class _AddEntryView extends StatelessWidget {
                             width: 300.0,
                             height: 400.0,
                             child: TextField(
+                                controller: entryController,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 style: TextStyle(height: 1.6),
@@ -93,6 +151,7 @@ class _AddEntryView extends StatelessWidget {
                   ),
                   onPressed: () {
                     //store entry here
+                    createJournalEntry(user);
                     //navigate to new page
                     Navigator.of(context).push(CupertinoPageRoute<void>(
                       builder: (BuildContext context) {
