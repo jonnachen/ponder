@@ -107,6 +107,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.12"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.16.1"
   matcher:
     dependency: transitive
     description:
@@ -268,8 +275,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-<<<<<<< HEAD
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
-=======
-  flutter: ">=1.16.0"
->>>>>>> 98d914dd3f1072f4d519a9a334965e77e5d23787
+  flutter: ">=1.16.0 <2.0.0"

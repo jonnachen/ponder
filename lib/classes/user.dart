@@ -28,16 +28,11 @@ class User {
             json['loginStreak'] != null ? int.parse(json['loginStreak']) : 0);
   }
 
-  Map toJson() {
-    print('yoooooo');
-    return {
-      '_id': id,
-      'username': username,
-      'articles':
-          jsonEncode(articles.map((article) => jsonEncode(article)).toList()),
-      'journals':
-          jsonEncode(journals.map((journal) => jsonEncode(journal)).toList()),
-      'loginStreak': '0' //jsonEncode(loginStreak)
-    };
-  }
+  Map toJson() => {
+        '_id': id,
+        'username': username,
+        'articles': jsonEncode(articles),
+        'journals': jsonEncode(journals),
+        'loginStreak': '0' //jsonEncode(loginStreak)
+      };
 }

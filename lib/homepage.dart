@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'classes/user.dart';
+import 'utils.dart' as utils;
 
 class HomepageTab extends StatefulWidget {
   final User user;
@@ -31,6 +32,7 @@ class _AddEntryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentDate = DateTime.now();
     return Scaffold(
         backgroundColor: Color(0xFFD4FFFF),
         body: Stack(
@@ -76,7 +78,8 @@ class _AddEntryView extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                             padding: EdgeInsets.only(bottom: 10.0),
-                            child: Text('{Date Here} | {Time Here}',
+                            child: Text(
+                                '${utils.formatDate(currentDate)} | ${utils.formatTime(currentDate)}}',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
