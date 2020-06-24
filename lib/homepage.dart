@@ -144,7 +144,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
                                 style: TextStyle(height: 1.6),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: 'Start writing here!')))
+                                    hintText: 'Start writing at least 3 sentences here!')))
                       ],
                     ),
                   ),
@@ -242,12 +242,12 @@ class _ArticleView extends StatelessWidget {
                               color: Color(0XFF5E6472))))),
               Container(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 32, bottom: 20),
+                  padding: EdgeInsets.only(left: 32, top: 5, bottom: 20),
                   child: Text(
                     "${article.url}",
                     style: TextStyle(
                       fontSize: 12.0,
-                      color: Color(0x44CEC9),
+                      color: Color(0xFF007D79),
                     ),
                   ),
                 ),

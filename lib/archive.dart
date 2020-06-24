@@ -558,16 +558,15 @@ class __ArticleViewState extends State<_ArticleView> {
                                       ),
                                     ),
                                   ),
-                                  Container(
+                                 Container(
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 32, bottom: 20),
-                                      child: Text(
-                                        "${article.url}",
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                          color: Color(0x44CEC9),
-                                        ),
+                                      padding: EdgeInsets.only(left: 32, top: 75, bottom: 20),
+                  child: Text(
+                    "${article.url}",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Color(0xFF007D79),
+                    ),
                                       ),
                                     ),
                                   ),
