@@ -156,9 +156,9 @@ class _LoginState extends State<Login> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomRight,
-                colors:[Color(0xFFB8F2E5), Color(0xFFC2F9BB)]
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors:[Color(0xFFB8F2E5), Color(0xFFC2F9BB)]
               ),
             ),
             child: Stack(
@@ -202,12 +202,12 @@ class _LoginState extends State<Login> {
                             ),
                             controller: nameController,
                             decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(bottom:3, left:15),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(60)),
-                                    borderSide: BorderSide(color: Colors.white, width: 4,)
-                                ),
-                                //hintText: 'Please enter your username'
+                              contentPadding: EdgeInsets.only(bottom:3, left:15),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(60)),
+                                  borderSide: BorderSide(color: Colors.white, width: 4,)
+                              ),
+                              //hintText: 'Please enter your username'
                             ),
                           ),
                         ),
@@ -222,33 +222,33 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Container(
-                            width: 350,
-                            height: 40,
-                            child: TextField(
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(bottom:3, left: 15),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(60)),
-                                    borderSide: BorderSide(color: Colors.white, width: 4,)
-                                ),
-                                //hintText: 'Please enter your username'
+                          width: 350,
+                          height: 40,
+                          child: TextField(
+                            controller: passwordController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom:3, left: 15),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(60)),
+                                  borderSide: BorderSide(color: Colors.white, width: 4,)
                               ),
+                              //hintText: 'Please enter your username'
                             ),
                           ),
+                        ),
 
 
                         if (mode == 'signup')
                           Stack(
                             children:<Widget>[
                               Padding(
-                                padding:EdgeInsets.only(left:6, top:15, bottom:7),
-                                child: Text("confirm password",
-                                style: TextStyle(
-                                  fontSize:26,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),)
+                                  padding:EdgeInsets.only(left:6, top:15, bottom:7),
+                                  child: Text("confirm password",
+                                    style: TextStyle(
+                                      fontSize:26,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),)
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top:50),
@@ -295,11 +295,11 @@ class _LoginState extends State<Login> {
                             ),
                             child:Center(
                                 child: Text("login",
-                                    style:TextStyle(
-                                      fontSize:28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF525764),
-                                    ),)
+                                  style:TextStyle(
+                                    fontSize:28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF525764),
+                                  ),)
                             ),
                           ),
                         ) : Padding(
@@ -335,11 +335,11 @@ class _LoginState extends State<Login> {
                         child: mode == 'login' ? Padding(
                           padding: EdgeInsets.only(top:1),
                           child: Text('or signup',
-                          style: TextStyle(
-                            fontSize:20,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF525764),
-                          )),
+                              style: TextStyle(
+                                fontSize:20,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF525764),
+                              )),
                         ) : Padding(
                           padding: EdgeInsets.only(top:1),
                           child: Text('or login',
