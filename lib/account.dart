@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'classes/user.dart';
 
 class AccountTab extends StatefulWidget {
+  final User user;
+
+  const AccountTab({Key key, @required this.user}) : super(key: key);
+
   @override
   _AccountTabState createState() {
     return _AccountTabState();
@@ -11,6 +16,7 @@ class AccountTab extends StatefulWidget {
 class _AccountTabState extends State<AccountTab> {
   @override
   Widget build(BuildContext context) {
+    final user = widget.user;
     return new Scaffold(
       backgroundColor: Color(0xFFD4FFFF),
       body: ListView(
@@ -21,7 +27,7 @@ class _AccountTabState extends State<AccountTab> {
               child: Padding(
                   padding: EdgeInsets.only(top: 15, bottom: 10, left: 20),
                   child: Text(
-                    "{Username}",
+                    "${user.username}",
                     style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,

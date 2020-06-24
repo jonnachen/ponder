@@ -80,7 +80,7 @@ class CupertinoStoreHomePage extends StatelessWidget {
           case 2:
             returnValue = CupertinoTabView(builder: (context) {
               return CupertinoPageScaffold(
-                child: AccountTab(),
+                child: AccountTab(user: user),
               );
             });
             break;

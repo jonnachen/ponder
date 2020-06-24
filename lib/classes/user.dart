@@ -17,8 +17,10 @@ class User {
     List<Article> articles =
         jsonArticles.map((article) => Article.fromJson(article)).toList();
     var jsonJournals = json['journals'] as List;
-    List<JournalEntry> journals =
-        jsonJournals.map((journal) => JournalEntry.fromJson(journal)).toList();
+    List<JournalEntry> journals = jsonJournals
+        .map((journal) => JournalEntry.fromJson(
+            journal, Article.fromJson(journal['article'])))
+        .toList();
     return User(
         id: json['_id'],
         username: json['username'],

@@ -44,7 +44,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
   bool error = false;
   bool loading = false;
 
-  Future<Article> createJournalEntry(user) async {
+  Future<JournalEntry> createJournalEntry(user) async {
     final text = entryController.text;
     setState(() {
       loading = true;
@@ -60,9 +60,13 @@ class _AddEntryViewState extends State<_AddEntryView> {
         'text': text,
       }),
     );
-
     if (response.statusCode == 200) {
-      return Article.fromJson(json.decode(response.body)['article']);
+      print("success");
+      var article = Article.fromJson(json.decode(response.body)['article']);
+      var journal =
+          JournalEntry.fromJson(json.decode(response.body)['journal'], article);
+      print('am here');
+      return journal;
     } else {
       setState(() {
         loading = false;
@@ -76,6 +80,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
   Widget build(BuildContext context) {
     final currentDate = DateTime.now();
     final user = widget.user;
+
     return Scaffold(
         backgroundColor: Color(0xFFD4FFFF),
         body: Stack(
@@ -153,10 +158,14 @@ class _AddEntryViewState extends State<_AddEntryView> {
                   ),
                   onPressed: () {
                     //store entry here
-                    createJournalEntry(user).then((article) {
+                    createJournalEntry(user).then((journalEntry) {
+                      print("i am here");
                       Navigator.of(context).push(CupertinoPageRoute<void>(
                         builder: (BuildContext context) {
-                          return _ArticleView(user: user, article: article);
+                          return _ArticleView(
+                              user: user,
+                              article: journalEntry.article,
+                              journalEntry: journalEntry);
                         },
                       ));
                     });
@@ -175,12 +184,18 @@ class _AddEntryViewState extends State<_AddEntryView> {
 class _ArticleView extends StatelessWidget {
   final User user;
   final Article article;
+  final JournalEntry journalEntry;
 
-  _ArticleView({Key key, @required this.user, @required this.article})
+  _ArticleView(
+      {Key key,
+      @required this.user,
+      @required this.article,
+      @required this.journalEntry})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("building");
     return CupertinoPageScaffold(
         backgroundColor: Color(0xFFD4FFFF),
         child: Stack(
@@ -256,8 +271,10 @@ class _ArticleView extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                _EndView(user: user, article: article)));
+                            builder: (context) => _EndView(
+                                user: user,
+                                article: article,
+                                journalEntry: journalEntry)));
                   },
                   color: Colors.white,
                   textColor: Color(0xff1A782E),
@@ -270,15 +287,51 @@ class _ArticleView extends StatelessWidget {
   }
 }
 
-class _EndView extends StatelessWidget {
+class _EndView extends StatefulWidget {
   final User user;
   final Article article;
+  final JournalEntry journalEntry;
 
-  _EndView({Key key, @required this.user, @required this.article})
+  const _EndView(
+      {Key key,
+      @required this.user,
+      @required this.article,
+      @required this.journalEntry})
       : super(key: key);
 
   @override
+  _EndViewState createState() {
+    return _EndViewState();
+  }
+}
+
+class _EndViewState extends State<_EndView> {
+  bool loading = false;
+  bool isFavorite = false;
+
+  favorite(journalEntry, user) async {
+    final http.Response response = await http.put(
+      routes.path + 'users/${user.id}',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{'journalEntry': journalEntry}),
+    );
+    if (response.statusCode == 200) {
+      return User.fromJson(json.decode(response.body)['user']);
+    } else {
+      throw Exception('Failed to load user');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final User user = widget.user;
+    final Article article = widget.article;
+    final JournalEntry journalEntry = widget.journalEntry;
+    setState(() {
+      isFavorite = journalEntry.favorited;
+    });
     return CupertinoPageScaffold(
         backgroundColor: Color(0xFFD4FFFF),
         child: Stack(
@@ -313,12 +366,20 @@ class _EndView extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Padding(
-                            padding: EdgeInsets.only(left: 50, right: 15),
+                          padding: EdgeInsets.only(left: 50, right: 15),
+                          child: FlatButton(
+                            onPressed: () {
+                              favorite(user, journalEntry);
+                            },
                             child: Image(
                                 width: 25,
                                 height: 25,
-                                image: AssetImage('img/star.png'))),
-                        Text("January 13, 2:04 am",
+                                image: isFavorite
+                                    ? AssetImage('img/filled_star.png')
+                                    : AssetImage('img/star.png')),
+                          ),
+                        ),
+                        Text("${utils.formatDate(journalEntry.createdAt)}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.black,
