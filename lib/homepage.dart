@@ -238,12 +238,12 @@ class _ArticleView extends StatelessWidget {
                               color: Color(0XFF5E6472))))),
               Container(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 32, bottom: 20),
+                  padding: EdgeInsets.only(left: 32, top: 5, bottom: 20),
                   child: Text(
                     "${article.url}",
                     style: TextStyle(
                       fontSize: 12.0,
-                      color: Color(0x44CEC9),
+                      color: Color(0xFF007D79),
                     ),
                   ),
                 ),
