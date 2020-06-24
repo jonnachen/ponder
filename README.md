@@ -4,6 +4,8 @@ In order to run this project make sure to download XCode on Mac or the Android s
 
 Once you have a simulator up and flutter installed, type flutter run in the project directory in the terminal and the app should open up in the simulator. Contact us if there are any issues.
 
+APK Files here: https://github.com/jonnachen/ponder_front/tree/master/apk
+
 For a sample user use this account:
 username: steven
 password: broski123
