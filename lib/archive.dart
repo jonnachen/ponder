@@ -97,7 +97,9 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             child: Text(
                               "Favorites",
                               style: TextStyle(
-                                  color: Color(0xFF5E6472), fontSize: 25.0),
+                                  letterSpacing: 1.4,
+                                  color: Color(0xFF5E6472),
+                                  fontSize: 25.0),
                             ),
                           ),
                         ),
@@ -108,6 +110,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             child: Text(
                               "Archive",
                               style: TextStyle(
+                                  letterSpacing: 1.4,
                                   color: Color(0xFF5E6472),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 25.0),
@@ -282,6 +285,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             child: Text(
                               "Favorites",
                               style: TextStyle(
+                                  letterSpacing: 1.4,
                                   color: Color(0xFF5E6472),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 25.0),
@@ -295,7 +299,9 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             child: Text(
                               "Archive",
                               style: TextStyle(
-                                  color: Color(0xFF5E6472), fontSize: 25.0),
+                                  color: Color(0xFF5E6472),
+                                  letterSpacing: 1.4,
+                                  fontSize: 25.0),
                             ),
                           ),
                         ),
@@ -552,6 +558,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                   child: Text(
                                     "${utils.formatDate(journalEntry.updatedAt)}",
                                     style: TextStyle(
+                                        letterSpacing: 1.3,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 40.0),
@@ -563,6 +570,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                   child: Text(
                                     "${utils.formatTime(journalEntry.updatedAt)}",
                                     style: TextStyle(
+                                      letterSpacing: 1.3,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
@@ -624,6 +632,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                   child: Text(
                                     "you should read this:",
                                     style: TextStyle(
+                                      letterSpacing: 1.8,
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xFF525764),
@@ -751,6 +760,14 @@ class _JournalState extends State<Journal> {
             height: 70,
             width: 70,
             decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.7),
+                  spreadRadius: 2,
+                  blurRadius: 1,
+                  offset: Offset(1, 3),
+                ),
+              ],
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(15),
                 topRight: Radius.circular(15),

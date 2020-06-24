@@ -96,6 +96,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
                             Positioned(
                                 child: Text('Hi ${user.username}!',
                                     style: TextStyle(
+                                        letterSpacing: 1.8,
                                         color: Color(0xFF525764),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 28.0))),
@@ -104,6 +105,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
                                 child: Text(
                                     'Let\'s get started, how are you doing?',
                                     style: TextStyle(
+                                        letterSpacing: 1.4,
                                         color: Color(0xFF525764),
                                         fontSize: 20.0))),
                             Positioned(
@@ -129,6 +131,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
                             child: Text(
                                 '${utils.formatDate(currentDate)} | ${utils.formatTime(currentDate)}',
                                 style: TextStyle(
+                                    letterSpacing: 1.3,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 24.0))),
@@ -345,6 +348,7 @@ class _EndViewState extends State<_EndView> {
                   child: Text("Today is ${utils.formatDate(DateTime.now())}.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
+                          letterSpacing: 1.7,
                           color: Color(0xFF525764),
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0))),
@@ -354,8 +358,10 @@ class _EndViewState extends State<_EndView> {
                   child: Text(
                       "Hope you have a great day today! Feel free to write another entry.",
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(color: Color(0xFF525764), fontSize: 20.0))),
+                      style: TextStyle(
+                          letterSpacing: 1.3,
+                          color: Color(0xFF525764),
+                          fontSize: 20.0))),
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Container(
