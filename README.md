@@ -7,3 +7,5 @@ Once you have a simulator up and flutter installed, type flutter run in the proj
 For a sample user use this account:
 username: steven
 password: broski123
+
+Side note: the favorites functionality works, it just updates after the user logs out and logs back in
