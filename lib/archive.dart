@@ -19,7 +19,9 @@ class ArchiveTab extends StatefulWidget {
 
 class _ArchiveTabState extends State<ArchiveTab> {
   bool loading = false;
+  bool showFavorites = false;
   Map<String, List<Journal>> journals = {};
+  Map<String, List<Journal>> favoriteJournals = {};
 
   processJournals(user) {
     setState(() {
@@ -38,6 +40,17 @@ class _ArchiveTabState extends State<ArchiveTab> {
           Journal(journalEntry: journalEntry, user: user)
         ];
       }
+
+      if (journalEntry.favorited) {
+        if (favoriteJournals.containsKey(formattedDate)) {
+          favoriteJournals[formattedDate]
+              .add(Journal(journalEntry: journalEntry, user: user));
+        } else {
+          favoriteJournals[formattedDate] = [
+            Journal(journalEntry: journalEntry, user: user)
+          ];
+        }
+      }
     });
     setState(() {
       loading = false;
@@ -47,9 +60,8 @@ class _ArchiveTabState extends State<ArchiveTab> {
   @override
   Widget build(BuildContext context) {
     final user = widget.user;
-    if (user.journals != null && user.journals.length != 0)
+    if (journals.isEmpty && user.journals != null && user.journals.length != 0)
       processJournals(user);
-    print(journals);
     var dates = journals.isEmpty ? [] : journals.keys.toList();
     return Scaffold(
       body: PageView(
@@ -83,13 +95,21 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                     Align(
                                       alignment: Alignment(0.75, -1),
                                       child: Container(
-                                        padding: EdgeInsets.only(left: 32),
-                                        child: Text(
-                                          "Favorites",
-                                          style: TextStyle(
-                                              letterSpacing: 1.4,
-                                              color: Color(0xFF5E6472),
-                                              fontSize: 25.0),
+                                        padding: EdgeInsets.only(left: 50),
+                                        child: FlatButton(
+                                          onPressed: () => {
+                                            setState(() {
+                                              showFavorites = true;
+                                            })
+                                          },
+                                          child: Text(
+                                            "Favorites",
+                                            style: TextStyle(
+                                                letterSpacing: 1.4,
+                                                color: Color(0xFF5E6472),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 25.0),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -97,13 +117,20 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                       alignment: Alignment(-0.75, -1),
                                       child: Container(
                                         padding: EdgeInsets.only(left: 32),
-                                        child: Text(
-                                          "Archive",
-                                          style: TextStyle(
-                                              letterSpacing: 1.4,
-                                              color: Color(0xFF5E6472),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 25.0),
+                                        child: FlatButton(
+                                          onPressed: () => {
+                                            setState(() {
+                                              showFavorites = false;
+                                            })
+                                          },
+                                          child: Text(
+                                            "Archive",
+                                            style: TextStyle(
+                                                letterSpacing: 1.4,
+                                                color: Color(0xFF5E6472),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 25.0),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -122,65 +149,129 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                 ),
                               ),
                             )),
-                Container(
-                  height: 600,
-                  child: ListView(
-                    children: [
-                      dates.length != 0
-                          ? Container(
-                              width: 200,
-                              height: 300,
-                              padding: EdgeInsets.only(top: 15),
-                              child: ListView(
-                                physics: const NeverScrollableScrollPhysics(),
-                                children: <Widget>[
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 25),
-                                    child: Text(
-                                      dates[0],
-                                      style: TextStyle(
-                                        color: Color(0xFF525764),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40.0,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
+                !showFavorites
+                    ? Container(
+                        height: 600,
+                        child: ListView(
+                          children: [
+                            dates.length != 0
+                                ? Container(
                                     width: 200,
-                                    height: 230,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFC2F9BB),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30),
-                                        topRight: Radius.circular(30),
-                                        bottomLeft: Radius.circular(30),
-                                        bottomRight: Radius.circular(30),
-                                      ),
-                                    ),
-                                    child: GridView.count(
-                                      mainAxisSpacing: 0,
-                                      crossAxisSpacing: 0,
-                                      crossAxisCount: 4,
+                                    height: 300,
+                                    padding: EdgeInsets.only(top: 15),
+                                    child: ListView(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       children: <Widget>[
-                                        for (var journal in journals[dates[0]])
-                                          journal
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 25),
+                                          child: Text(
+                                            dates[0],
+                                            style: TextStyle(
+                                              color: Color(0xFF525764),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 40.0,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 200,
+                                          height: 230,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFC2F9BB),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30),
+                                              topRight: Radius.circular(30),
+                                              bottomLeft: Radius.circular(30),
+                                              bottomRight: Radius.circular(30),
+                                            ),
+                                          ),
+                                          child: GridView.count(
+                                            mainAxisSpacing: 0,
+                                            crossAxisSpacing: 0,
+                                            crossAxisCount: 4,
+                                            children: <Widget>[
+                                              for (var journal
+                                                  in journals[dates[0]])
+                                                journal
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Padding(
-                              padding: EdgeInsets.only(
-                                  top: 30, left: 100, right: 100),
-                              child: Text(
-                                "Nothing here yet! Get writing some journal entries :)",
-                                style: TextStyle(fontSize: 20.0),
-                              ),
-                            )
-                    ],
-                  ),
-                ),
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 30, left: 100, right: 100),
+                                    child: Text(
+                                      "Nothing here yet! Get writing some journal entries :)",
+                                      style: TextStyle(fontSize: 20.0),
+                                    ),
+                                  )
+                          ],
+                        ),
+                      )
+                    : Container(
+                        height: 600,
+                        child: ListView(
+                          children: [
+                            dates.length != 0 && favoriteJournals.length != 0
+                                ? Container(
+                                    width: 200,
+                                    height: 300,
+                                    padding: EdgeInsets.only(top: 15),
+                                    child: ListView(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 25),
+                                          child: Text(
+                                            dates[0],
+                                            style: TextStyle(
+                                              color: Color(0xFF525764),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 40.0,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 200,
+                                          height: 230,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFC2F9BB),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30),
+                                              topRight: Radius.circular(30),
+                                              bottomLeft: Radius.circular(30),
+                                              bottomRight: Radius.circular(30),
+                                            ),
+                                          ),
+                                          child: GridView.count(
+                                            mainAxisSpacing: 0,
+                                            crossAxisSpacing: 0,
+                                            crossAxisCount: 4,
+                                            children: <Widget>[
+                                              for (var journal
+                                                  in favoriteJournals[dates[0]])
+                                                journal
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 30, left: 100, right: 100),
+                                    child: Text(
+                                      "Nothing here yet! Get writing some journal entries :)",
+                                      style: TextStyle(fontSize: 20.0),
+                                    ),
+                                  )
+                          ],
+                        ),
+                      )
               ],
             ),
           ),
@@ -198,14 +289,21 @@ class _ArchiveTabState extends State<ArchiveTab> {
                         Align(
                           alignment: Alignment(0.75, -1),
                           child: Container(
-                            padding: EdgeInsets.only(left: 32, right: 32),
-                            child: Text(
-                              "Favorites",
-                              style: TextStyle(
-                                  letterSpacing: 1.4,
-                                  color: Color(0xFF5E6472),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25.0),
+                            padding: EdgeInsets.only(left: 50, right: 32),
+                            child: FlatButton(
+                              onPressed: () => {
+                                setState(() {
+                                  showFavorites = true;
+                                })
+                              },
+                              child: Text(
+                                "Favorites",
+                                style: TextStyle(
+                                    letterSpacing: 1.4,
+                                    color: Color(0xFF5E6472),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25.0),
+                              ),
                             ),
                           ),
                         ),
@@ -213,12 +311,20 @@ class _ArchiveTabState extends State<ArchiveTab> {
                           alignment: Alignment(-0.75, -1),
                           child: Container(
                             padding: EdgeInsets.only(left: 32, right: 32),
-                            child: Text(
-                              "Archive",
-                              style: TextStyle(
-                                  color: Color(0xFF5E6472),
-                                  letterSpacing: 1.4,
-                                  fontSize: 25.0),
+                            child: FlatButton(
+                              onPressed: () => {
+                                setState(() {
+                                  showFavorites = false;
+                                })
+                              },
+                              child: Text(
+                                "Archive",
+                                style: TextStyle(
+                                    letterSpacing: 1.4,
+                                    color: Color(0xFF5E6472),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25.0),
+                              ),
                             ),
                           ),
                         ),
@@ -236,135 +342,6 @@ class _ArchiveTabState extends State<ArchiveTab> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 600,
-                  child: ListView(
-                    children: [
-                      Container(
-                        width: 200,
-                        height: 300,
-                        padding: EdgeInsets.only(top: 15),
-                        child: ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 25),
-                              child: Text(
-                                "January",
-                                style: TextStyle(
-                                  color: Color(0xFF525764),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 40.0,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 200,
-                              height: 230,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFC2F9BB),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(30),
-                                  bottomRight: Radius.circular(30),
-                                ),
-                              ),
-                              child: GridView.count(
-                                crossAxisCount: 4,
-                                children: <Widget>[
-                                  for (var journal in user.journals)
-                                    Journal(journalEntry: journal, user: user)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 200,
-                        height: 300,
-                        padding: EdgeInsets.only(top: 15),
-                        child: ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 25),
-                              child: Text(
-                                "February",
-                                style: TextStyle(
-                                  color: Color(0xFF525764),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 40.0,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 200,
-                              height: 230,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFAED9E0),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30),
-                                    bottomLeft: Radius.circular(30),
-                                    bottomRight: Radius.circular(30)),
-                              ),
-                              child: GridView.count(
-                                crossAxisCount: 4,
-                                children: <Widget>[
-                                  for (var journal in user.journals)
-                                    Journal(journalEntry: journal, user: user)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 200,
-                        height: 300,
-                        padding: EdgeInsets.only(top: 15),
-                        child: ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 25),
-                              child: Text(
-                                "March",
-                                style: TextStyle(
-                                  color: Color(0xFF525764),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 40.0,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 200,
-                              height: 230,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFFED3D3),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(30),
-                                  bottomRight: Radius.circular(30),
-                                ),
-                              ),
-                              child: GridView.count(
-                                crossAxisCount: 4,
-                                children: <Widget>[
-                                  for (var journal in user.journals)
-                                    Journal(journalEntry: journal, user: user)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'classes/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -161,7 +162,12 @@ class _AddEntryViewState extends State<_AddEntryView> {
                     //store entry here
                     createJournalEntry(user).then((journalEntry) {
                       user.journals.add(journalEntry);
-                      print("i am here");
+
+                      SharedPreferences.getInstance().then((prefs) {
+                        final jsonUser = jsonEncode(user);
+                        prefs.setString('user', jsonUser);
+                      });
+
                       Navigator.of(context).push(CupertinoPageRoute<void>(
                         builder: (BuildContext context) {
                           return _ArticleView(
@@ -197,7 +203,6 @@ class _ArticleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("building");
     return CupertinoPageScaffold(
         backgroundColor: Color(0xFFD4FFFF),
         child: Stack(
@@ -312,6 +317,9 @@ class _EndViewState extends State<_EndView> {
   bool isFavorite = false;
 
   Future<JournalEntry> favorite(journalEntry, article) async {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
     final http.Response response = await http.put(
       routes.path + 'journals/${journalEntry.id}/favorite',
       headers: <String, String>{
@@ -326,10 +334,6 @@ class _EndViewState extends State<_EndView> {
     } else {
       throw Exception('Failed to load user');
     }
-    setState(() {
-      isFavorite = !isFavorite;
-    });
-    return journalEntry;
   }
 
   @override
@@ -377,7 +381,14 @@ class _EndViewState extends State<_EndView> {
                           padding: EdgeInsets.only(left: 20, right: 15),
                           child: FlatButton(
                             onPressed: () {
-                              favorite(journalEntry, article);
+                              favorite(journalEntry, article)
+                                  .then((updatedJournal) {
+                                for (var i = 0; i < user.journals.length; i++) {
+                                  if (user.journals[i].id == journalEntry.id) {
+                                    user.journals[i] = updatedJournal;
+                                  }
+                                }
+                              });
                             },
                             child: Image(
                                 width: 25,
