@@ -309,13 +309,16 @@ class _EndViewState extends State<_EndView> {
   bool loading = false;
   bool isFavorite = false;
 
-  favorite(journalEntry, user) async {
+  Future<User> favorite(user, journalEntry) async {
     final http.Response response = await http.put(
-      routes.path + 'users/${user.id}',
+      routes.path + 'users/${user.id}/favorite',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{'journalEntry': journalEntry}),
+      body: jsonEncode(<String, String>{
+        'journalEntry': journalEntry.id,
+        'favorited': jsonEncode(journalEntry.favorited)
+      }),
     );
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body)['user']);
@@ -366,7 +369,7 @@ class _EndViewState extends State<_EndView> {
                     child: Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(left: 50, right: 15),
+                          padding: EdgeInsets.only(left: 20, right: 15),
                           child: FlatButton(
                             onPressed: () {
                               favorite(user, journalEntry);
