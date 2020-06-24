@@ -13,10 +13,14 @@ class User {
       {this.id, this.username, this.articles, this.journals, this.loginStreak});
 
   factory User.fromJson(Map<String, dynamic> json) {
-    var jsonArticles = json['articles'] as List;
+    var jsonArticles = (json['articles'] is String
+        ? jsonDecode(json['articles'])
+        : json['articles']) as List;
     List<Article> articles =
         jsonArticles.map((article) => Article.fromJson(article)).toList();
-    var jsonJournals = json['journals'] as List;
+    var jsonJournals = (json['journals'] is String
+        ? jsonDecode(json['journals'])
+        : json['journals']) as List;
     List<JournalEntry> journals = jsonJournals
         .map((journal) => JournalEntry.fromJson(
             journal, Article.fromJson(journal['article'])))

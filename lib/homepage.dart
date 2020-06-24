@@ -313,7 +313,7 @@ class _EndViewState extends State<_EndView> {
   bool isFavorite = false;
 
   Future<User> favorite(user, journalEntry) async {
-    final http.Response response = await http.put(
+    /*final http.Response response = await http.put(
       routes.path + 'users/${user.id}/favorite',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -327,7 +327,11 @@ class _EndViewState extends State<_EndView> {
       return User.fromJson(json.decode(response.body)['user']);
     } else {
       throw Exception('Failed to load user');
-    }
+    }*/
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+    return user;
   }
 
   @override
@@ -335,9 +339,6 @@ class _EndViewState extends State<_EndView> {
     final User user = widget.user;
     final Article article = widget.article;
     final JournalEntry journalEntry = widget.journalEntry;
-    setState(() {
-      isFavorite = journalEntry.favorited;
-    });
     return CupertinoPageScaffold(
         backgroundColor: Color(0xFFD4FFFF),
         child: Stack(
