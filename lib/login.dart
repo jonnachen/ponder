@@ -186,6 +186,7 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.only(right: 230, bottom: 5),
                           child: Text("username",
                             style: TextStyle(
+                              letterSpacing: 1.4,
                               fontSize:26,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -215,6 +216,7 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.only(right: 230, top:15, bottom: 5),
                           child: Text("password",
                             style: TextStyle(
+                              letterSpacing: 1.4,
                               fontSize:26,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -245,6 +247,7 @@ class _LoginState extends State<Login> {
                                   padding:EdgeInsets.only(left:6, top:15, bottom:7),
                                   child: Text("confirm password",
                                     style: TextStyle(
+                                      letterSpacing: 1.4,
                                       fontSize:26,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
