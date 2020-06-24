@@ -120,11 +120,11 @@ class _AddEntryViewState extends State<_AddEntryView> {
                         Padding(
                             padding: EdgeInsets.only(bottom: 10.0),
                             child: Text(
-                                '${utils.formatDate(currentDate)} | ${utils.formatTime(currentDate)}}',
+                                '${utils.formatDate(currentDate)} | ${utils.formatTime(currentDate)}',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 30.0))),
+                                    fontSize: 26.0))),
                         Container(
                             width: 300.0,
                             height: 400.0,
@@ -184,7 +184,7 @@ class _ArticleView extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                           padding:
-                              EdgeInsets.only(left: 32, top: 33, right: 32),
+                          EdgeInsets.only(left: 32, top: 33, right: 32),
                           child: ListView(
                             children: <Widget>[
                               Text("Here\'s your article of the day!",
@@ -198,7 +198,7 @@ class _ArticleView extends StatelessWidget {
                           left: 272,
                           bottom: 0,
                           child:
-                              Image(image: AssetImage('img/article_leaf.png')))
+                          Image(image: AssetImage('img/article_leaf.png')))
                     ],
                   )),
               Container(
@@ -261,12 +261,12 @@ class _EndView extends StatelessWidget {
                           fontSize: 20.0))),
               Padding(
                   padding:
-                      EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 30),
+                  EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 30),
                   child: Text(
                       "Hope you have a great day today! Feel free to write another entry.",
                       textAlign: TextAlign.center,
                       style:
-                          TextStyle(color: Color(0xFF525764), fontSize: 20.0))),
+                      TextStyle(color: Color(0xFF525764), fontSize: 20.0))),
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Container(
