@@ -61,11 +61,9 @@ class _AddEntryViewState extends State<_AddEntryView> {
       }),
     );
     if (response.statusCode == 200) {
-      print("success");
       var article = Article.fromJson(json.decode(response.body)['article']);
       var journal =
           JournalEntry.fromJson(json.decode(response.body)['journal'], article);
-      print('am here');
       return journal;
     } else {
       setState(() {
@@ -162,6 +160,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
                   onPressed: () {
                     //store entry here
                     createJournalEntry(user).then((journalEntry) {
+                      user.journals.add(journalEntry);
                       print("i am here");
                       Navigator.of(context).push(CupertinoPageRoute<void>(
                         builder: (BuildContext context) {
@@ -312,26 +311,25 @@ class _EndViewState extends State<_EndView> {
   bool loading = false;
   bool isFavorite = false;
 
-  Future<User> favorite(user, journalEntry) async {
-    /*final http.Response response = await http.put(
-      routes.path + 'users/${user.id}/favorite',
+  Future<JournalEntry> favorite(journalEntry, article) async {
+    final http.Response response = await http.put(
+      routes.path + 'journals/${journalEntry.id}/favorite',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
-        'journalEntry': journalEntry.id,
-        'favorited': jsonEncode(journalEntry.favorited)
-      }),
+      body: jsonEncode(
+          <String, String>{'favorited': journalEntry.favorited as String}),
     );
     if (response.statusCode == 200) {
-      return User.fromJson(json.decode(response.body)['user']);
+      return JournalEntry.fromJson(
+          json.decode(response.body)['journal'], article);
     } else {
       throw Exception('Failed to load user');
-    }*/
+    }
     setState(() {
       isFavorite = !isFavorite;
     });
-    return user;
+    return journalEntry;
   }
 
   @override
@@ -379,7 +377,7 @@ class _EndViewState extends State<_EndView> {
                           padding: EdgeInsets.only(left: 20, right: 15),
                           child: FlatButton(
                             onPressed: () {
-                              favorite(user, journalEntry);
+                              favorite(journalEntry, article);
                             },
                             child: Image(
                                 width: 25,
