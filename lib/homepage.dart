@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'classes/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'classes/user.dart';
 import 'classes/journalEntry.dart';
+import 'classes/article.dart';
 import 'constants/routes.dart' as routes;
 import 'utils.dart' as utils;
 
@@ -43,7 +44,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
   bool error = false;
   bool loading = false;
 
-  createJournalEntry(user) async {
+  Future<JournalEntry> createJournalEntry(user) async {
     final text = entryController.text;
     setState(() {
       loading = true;
@@ -59,14 +60,19 @@ class _AddEntryViewState extends State<_AddEntryView> {
         'text': text,
       }),
     );
-
     if (response.statusCode == 200) {
-      return JournalEntry.fromJson(json.decode(response.body)['journal']);
+      print("success");
+      var article = Article.fromJson(json.decode(response.body)['article']);
+      var journal =
+          JournalEntry.fromJson(json.decode(response.body)['journal'], article);
+      print('am here');
+      return journal;
     } else {
       setState(() {
         loading = false;
         error = true;
       });
+      throw new Exception("Unable to submit journal entry.");
     }
   }
 
@@ -74,6 +80,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
   Widget build(BuildContext context) {
     final currentDate = DateTime.now();
     final user = widget.user;
+
     return Scaffold(
         backgroundColor: Color(0xFFD4FFFF),
         body: Stack(
@@ -127,7 +134,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
                                     letterSpacing: 1.3,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 26.0))),
+                                    fontSize: 24.0))),
                         Container(
                             width: 300.0,
                             height: 400.0,
@@ -154,13 +161,17 @@ class _AddEntryViewState extends State<_AddEntryView> {
                   ),
                   onPressed: () {
                     //store entry here
-                    createJournalEntry(user);
-                    //navigate to new page
-                    Navigator.of(context).push(CupertinoPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return _ArticleView();
-                      },
-                    ));
+                    createJournalEntry(user).then((journalEntry) {
+                      print("i am here");
+                      Navigator.of(context).push(CupertinoPageRoute<void>(
+                        builder: (BuildContext context) {
+                          return _ArticleView(
+                              user: user,
+                              article: journalEntry.article,
+                              journalEntry: journalEntry);
+                        },
+                      ));
+                    });
                   },
                   color: Colors.white,
                   textColor: Color(0xff1A782E),
@@ -174,8 +185,20 @@ class _AddEntryViewState extends State<_AddEntryView> {
 }
 
 class _ArticleView extends StatelessWidget {
+  final User user;
+  final Article article;
+  final JournalEntry journalEntry;
+
+  _ArticleView(
+      {Key key,
+      @required this.user,
+      @required this.article,
+      @required this.journalEntry})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    print("building");
     return CupertinoPageScaffold(
         backgroundColor: Color(0xFFD4FFFF),
         child: Stack(
@@ -187,13 +210,13 @@ class _ArticleView extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                           padding:
-                          EdgeInsets.only(left: 32, top: 33, right: 32),
+                              EdgeInsets.only(left: 32, top: 33, right: 32),
                           child: ListView(
                             children: <Widget>[
                               Text("Here\'s your article of the day!",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: 30.0,
+                                      fontSize: 20.0,
                                       fontWeight: FontWeight.bold)),
                             ],
                           )),
@@ -201,26 +224,41 @@ class _ArticleView extends StatelessWidget {
                           left: 272,
                           bottom: 0,
                           child:
-                          Image(image: AssetImage('img/article_leaf.png')))
+                              Image(image: AssetImage('img/article_leaf.png')))
                     ],
                   )),
               Container(
                   color: Color(0xFFFAF3DD),
                   child: Padding(
                       padding: EdgeInsets.only(left: 32, top: 28, bottom: 20),
-                      child: Text("{Article Name Here}",
+                      child: Text("${article.title}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 36.0,
                               color: Color(0XFF5E6472))))),
               Container(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 32, bottom: 20),
+                  child: Text(
+                    "${article.url}",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Color(0x44CEC9),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
                   color: Colors.white,
-                  height: 600.0,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 40, top: 30, right: 40),
-                      child: Text(
-                          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,  Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minim",
-                          style: TextStyle(fontSize: 20.0, height: 1.3))))
+                  height: 2000.0,
+                  child: //ListView(children: <Widget>[
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: 20, top: 30, right: 20),
+                          child: WebView(
+                              initialUrl: article.url,
+                              javascriptMode: JavascriptMode.unrestricted))
+                  /*])*/)
             ]),
             Positioned(
                 right: 30,
@@ -231,9 +269,15 @@ class _ArticleView extends StatelessWidget {
                   ),
                   onPressed: () {
                     //store entry here
+
                     //navigate to new page
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => _EndView()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => _EndView(
+                                user: user,
+                                article: article,
+                                journalEntry: journalEntry)));
                   },
                   color: Colors.white,
                   textColor: Color(0xff1A782E),
@@ -246,9 +290,55 @@ class _ArticleView extends StatelessWidget {
   }
 }
 
-class _EndView extends StatelessWidget {
+class _EndView extends StatefulWidget {
+  final User user;
+  final Article article;
+  final JournalEntry journalEntry;
+
+  const _EndView(
+      {Key key,
+      @required this.user,
+      @required this.article,
+      @required this.journalEntry})
+      : super(key: key);
+
+  @override
+  _EndViewState createState() {
+    return _EndViewState();
+  }
+}
+
+class _EndViewState extends State<_EndView> {
+  bool loading = false;
+  bool isFavorite = false;
+
+  Future<User> favorite(user, journalEntry) async {
+    /*final http.Response response = await http.put(
+      routes.path + 'users/${user.id}/favorite',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'journalEntry': journalEntry.id,
+        'favorited': jsonEncode(journalEntry.favorited)
+      }),
+    );
+    if (response.statusCode == 200) {
+      return User.fromJson(json.decode(response.body)['user']);
+    } else {
+      throw Exception('Failed to load user');
+    }*/
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+    return user;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final User user = widget.user;
+    final Article article = widget.article;
+    final JournalEntry journalEntry = widget.journalEntry;
     return CupertinoPageScaffold(
         backgroundColor: Color(0xFFD4FFFF),
         child: Stack(
@@ -256,7 +346,7 @@ class _EndView extends StatelessWidget {
             ListView(children: <Widget>[
               Padding(
                   padding: EdgeInsets.only(top: 30, left: 30, right: 30),
-                  child: Text("Today is January 13, 2020.",
+                  child: Text("Today is ${utils.formatDate(DateTime.now())}.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           letterSpacing: 1.7,
@@ -265,12 +355,11 @@ class _EndView extends StatelessWidget {
                           fontSize: 20.0))),
               Padding(
                   padding:
-                  EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 30),
+                      EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 30),
                   child: Text(
                       "Hope you have a great day today! Feel free to write another entry.",
                       textAlign: TextAlign.center,
-                      style:
-                      TextStyle(
+                      style: TextStyle(
                           letterSpacing: 1.3,
                           color: Color(0xFF525764),
                           fontSize: 20.0))),
@@ -287,12 +376,20 @@ class _EndView extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Padding(
-                            padding: EdgeInsets.only(left: 50, right: 15),
+                          padding: EdgeInsets.only(left: 20, right: 15),
+                          child: FlatButton(
+                            onPressed: () {
+                              favorite(user, journalEntry);
+                            },
                             child: Image(
                                 width: 25,
                                 height: 25,
-                                image: AssetImage('img/star.png'))),
-                        Text("January 13, 2:04 am",
+                                image: isFavorite
+                                    ? AssetImage('img/filled_star.png')
+                                    : AssetImage('img/star.png')),
+                          ),
+                        ),
+                        Text("${utils.formatDate(journalEntry.createdAt)}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.black,
@@ -313,7 +410,7 @@ class _EndView extends StatelessWidget {
                               bottomLeft: Radius.circular(20.0),
                               bottomRight: Radius.circular(20.0))),
                       child: Center(
-                          child: Text("Stress 101",
+                          child: Text(article.title,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 18.0, color: Color(0xff5E6472)))))),
@@ -326,7 +423,7 @@ class _EndView extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute<void>(
                       builder: (BuildContext context) {
-                        return _AddEntryView();
+                        return _AddEntryView(user: user);
                       },
                     ));
                   },
@@ -334,10 +431,8 @@ class _EndView extends StatelessWidget {
                   textColor: Color(0xff1A782E),
                   child: Padding(
                       padding: EdgeInsets.all(15.0),
-                      child: Text("+ another entry",
-                          style: TextStyle(
-                              letterSpacing: 1.5,
-                              fontSize: 20.0))),
+                      child: Text("+ New Entry",
+                          style: TextStyle(fontSize: 20.0))),
                 ),
               )
             ]),

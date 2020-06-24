@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'archive.dart';
 import 'account.dart';
 import 'homepage.dart';
@@ -11,18 +12,42 @@ void main() {
   return runApp(MyApp());
 }
 
+void goToHome(context) {
+  Navigator.pushNamed(context, '/home');
+}
+
+Future<Null> logout(context) async {
+  print("logging out");
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  //remove the user from shared preferences, logging out if this is successful
+  preferences.remove('user').then((removed) {
+    if (removed) {
+      Navigator.popUntil(context, ModalRoute.withName('/'));
+    }
+  });
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
         title: 'Ponder',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'SF Pro'),
-        initialRoute: '/',
-        routes: {
-          // When navigating to the "/" route, build the Login widget.
-          '/': (context) => Login(),
-          // When navigating to the "/second" route, build the bottom navigation widget.
-          '/home': (context) => CupertinoStoreApp(),
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case '/':
+              return CupertinoPageRoute(
+                  builder: (_) => Login(goToHome: goToHome),
+                  settings: settings);
+            case '/home':
+              return CupertinoPageRoute(
+                  builder: (_) => CupertinoStoreApp(), settings: settings);
+            default:
+              return CupertinoPageRoute(
+                  builder: (_) => Login(goToHome: goToHome),
+                  settings: settings);
+          }
         });
   }
 }
@@ -72,14 +97,14 @@ class CupertinoStoreHomePage extends StatelessWidget {
           case 1:
             returnValue = CupertinoTabView(builder: (context) {
               return CupertinoPageScaffold(
-                child: ArchiveTab(),
+                child: ArchiveTab(user: user),
               );
             });
             break;
           case 2:
             returnValue = CupertinoTabView(builder: (context) {
               return CupertinoPageScaffold(
-                child: AccountTab(),
+                child: AccountTab(user: user, logout: logout),
               );
             });
             break;
