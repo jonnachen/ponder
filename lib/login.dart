@@ -150,52 +150,213 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            loading
-                ? CircularProgressIndicator()
-                : (!loggedIn
-                    ? new Column(children: [
-                        TextField(
-                          textAlign: TextAlign.center,
-                          controller: nameController,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Please enter your username'),
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          controller: passwordController,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Please enter your password'),
-                        ),
-                        if (mode == 'signup')
-                          TextField(
-                            textAlign: TextAlign.center,
-                            controller: passwordRepeatController,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Please re-enter your password'),
-                          ),
-                      ])
-                    : Text('You are logged in')),
-            SizedBox(height: 10.0),
-            RaisedButton(
-              onPressed: () => {mode == 'login' ? login() : signup()},
-              child: mode == 'login' ? Text('Login') : Text('Signup'),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors:[Color(0xFFB8F2E5), Color(0xFFC2F9BB)]
+              ),
             ),
-            FlatButton(
-              onPressed: () => {toggleMode()},
-              child: mode == 'login' ? Text('or  signup') : Text('or login'),
-            )
-          ],
-        ),
+            child: Stack(
+              children:<Widget>[
+
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget> [
+                      loading
+                          ? CircularProgressIndicator()
+                          : (!loggedIn
+                          ? new Column(children: [
+                        Padding(
+                          padding: EdgeInsets.only(left:250),
+                          child: Container(
+                            child: Image(
+                              width: 60,
+                              height: 60,
+                              image: AssetImage('img/home_leaf.png'),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 230, bottom: 5),
+                          child: Text("username",
+                            style: TextStyle(
+                              fontSize:26,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width:350,
+                          height: 40,
+                          child: TextField(
+                            style: TextStyle(
+                              color: Color(0xFF525764),
+                              fontSize:17,
+                            ),
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom:3, left:15),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(60)),
+                                  borderSide: BorderSide(color: Colors.white, width: 4,)
+                              ),
+                              //hintText: 'Please enter your username'
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 230, top:15, bottom: 5),
+                          child: Text("password",
+                            style: TextStyle(
+                              fontSize:26,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 350,
+                          height: 40,
+                          child: TextField(
+                            controller: passwordController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom:3, left: 15),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(60)),
+                                  borderSide: BorderSide(color: Colors.white, width: 4,)
+                              ),
+                              //hintText: 'Please enter your username'
+                            ),
+                          ),
+                        ),
+
+
+                        if (mode == 'signup')
+                          Stack(
+                            children:<Widget>[
+                              Padding(
+                                  padding:EdgeInsets.only(left:6, top:15, bottom:7),
+                                  child: Text("confirm password",
+                                    style: TextStyle(
+                                      fontSize:26,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),)
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top:50),
+                                child: Container(
+                                  width: 350,
+                                  height: 40,
+                                  child: TextField(
+                                    controller: passwordRepeatController,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(bottom:3, left: 15),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(60)),
+                                          borderSide: BorderSide(color: Colors.white, width: 4,)
+                                      ),
+                                      //hintText: 'Please enter your username'
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                      ])
+                          : Text('You are logged in')),
+                      SizedBox(height: 10.0),
+                      FlatButton(
+                        onPressed: () => {mode == 'login' ? login() : signup()},
+                        child: mode == 'login' ? Padding(
+                          padding: EdgeInsets.only(top:20),
+                          child: Container(
+                            width: 150,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                boxShadow:[
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius:7,
+                                    offset:Offset(2.5,4),
+                                  ),
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(70))
+                            ),
+                            child:Center(
+                                child: Text("login",
+                                  style:TextStyle(
+                                    fontSize:28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF525764),
+                                  ),)
+                            ),
+                          ),
+                        ) : Padding(
+                          padding: EdgeInsets.only(top:20),
+                          child: Container(
+                            width: 150,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                boxShadow:[
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius:7,
+                                    offset:Offset(2.5,4),
+                                  ),
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(70))
+                            ),
+                            child:Center(
+                                child: Text("signup",
+                                  style:TextStyle(
+                                    fontSize:28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF525764),
+                                  ),)
+                            ),
+                          ),
+                        ),
+                      ),
+                      FlatButton(
+                        onPressed: () => {toggleMode()},
+                        child: mode == 'login' ? Padding(
+                          padding: EdgeInsets.only(top:1),
+                          child: Text('or signup',
+                              style: TextStyle(
+                                fontSize:20,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF525764),
+                              )),
+                        ) : Padding(
+                          padding: EdgeInsets.only(top:1),
+                          child: Text('or login',
+                              style: TextStyle(
+                                fontSize:20,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF525764),
+                              )),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

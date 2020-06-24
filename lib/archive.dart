@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'classes/user.dart';
 import 'classes/journalEntry.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'utils.dart' as utils;
 
 class ArchiveTab extends StatefulWidget {
   final User user;
@@ -29,9 +30,12 @@ class _ArchiveTabState extends State<ArchiveTab> {
       String formattedDate =
           DateFormat.yMMMM('en_US').format(journalEntry.updatedAt);
       if (journals.containsKey(formattedDate)) {
-        journals[formattedDate].add(Journal(journalEntry: journalEntry));
+        journals[formattedDate]
+            .add(Journal(journalEntry: journalEntry, user: user));
       } else {
-        journals[formattedDate] = [Journal(journalEntry: journalEntry)];
+        journals[formattedDate] = [
+          Journal(journalEntry: journalEntry, user: user)
+        ];
       }
     });
     setState(() {
@@ -158,6 +162,8 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                 ),
                               ),
                               child: GridView.count(
+                                mainAxisSpacing: 0,
+                                crossAxisSpacing: 0,
                                 crossAxisCount: 4,
                                 children: <Widget>[
                                   for (var journal in journals[dates[0]])
@@ -201,7 +207,9 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                 crossAxisCount: 4,
                                 children: <Widget>[
                                   for (var i = 0; i < 5; i++)
-                                    Journal(journalEntry: user.journals[i])
+                                    Journal(
+                                        journalEntry: user.journals[i],
+                                        user: user)
                                 ],
                               ),
                             ),
@@ -241,7 +249,9 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                 crossAxisCount: 4,
                                 children: <Widget>[
                                   for (var i = 0; i < 3; i++)
-                                    Journal(journalEntry: user.journals[i])
+                                    Journal(
+                                        journalEntry: user.journals[i],
+                                        user: user)
                                 ],
                               ),
                             ),
@@ -258,31 +268,6 @@ class _ArchiveTabState extends State<ArchiveTab> {
             color: Color(0xFFD4FFFF),
             child: ListView(
               children: [
-                Container(
-                  color: Color(0xFFD4FFFF),
-                  padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                  child: new Container(
-                    child: new Center(
-                      child: new Column(children: [
-                        new TextFormField(
-                          decoration: new InputDecoration(
-                            contentPadding: EdgeInsets.only(
-                                left: 20, top: -10, bottom: -10),
-                            labelStyle: TextStyle(
-                                fontSize: 23, color: Color(0xFFC4C4C4)),
-                            labelText: "Search",
-                            icon: Icon(Icons.search),
-                            fillColor: Colors.white,
-                            border: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(50.0),
-                              borderSide: new BorderSide(),
-                            ),
-                          ),
-                        ),
-                      ]),
-                    ),
-                  ),
-                ),
                 Padding(
                   padding: EdgeInsets.only(top: 15),
                   child: Container(
@@ -366,7 +351,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                 crossAxisCount: 4,
                                 children: <Widget>[
                                   for (var journal in user.journals)
-                                    Journal(journalEntry: journal)
+                                    Journal(journalEntry: journal, user: user)
                                 ],
                               ),
                             ),
@@ -406,7 +391,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                 crossAxisCount: 4,
                                 children: <Widget>[
                                   for (var journal in user.journals)
-                                    Journal(journalEntry: journal)
+                                    Journal(journalEntry: journal, user: user)
                                 ],
                               ),
                             ),
@@ -447,7 +432,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                 crossAxisCount: 4,
                                 children: <Widget>[
                                   for (var journal in user.journals)
-                                    Journal(journalEntry: journal)
+                                    Journal(journalEntry: journal, user: user)
                                 ],
                               ),
                             ),
@@ -467,9 +452,12 @@ class _ArchiveTabState extends State<ArchiveTab> {
 }
 
 class _ArticleView extends StatefulWidget {
-  final User journalEntry;
+  final JournalEntry journalEntry;
+  final User user;
 
-  const _ArticleView({Key key, @required this.journalEntry}) : super(key: key);
+  const _ArticleView(
+      {Key key, @required this.journalEntry, @required this.user})
+      : super(key: key);
 
   @override
   __ArticleViewState createState() => __ArticleViewState();
@@ -480,6 +468,9 @@ class __ArticleViewState extends State<_ArticleView> {
 
   @override
   Widget build(BuildContext context) {
+    final user = widget.user;
+    final journalEntry = widget.journalEntry;
+    final article = journalEntry.article;
     return Scaffold(
       backgroundColor: Color(0xFFD4FFFF),
       body: Stack(
@@ -493,7 +484,7 @@ class __ArticleViewState extends State<_ArticleView> {
                     Padding(
                       padding: EdgeInsets.only(left: 10, top: 15, right: 32),
                       child: Container(
-                        height: 60.0,
+                        height: 40.0,
                         child: Stack(
                           children: <Widget>[
                             FlatButton(
@@ -501,7 +492,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                 Navigator.of(context)
                                     .push(CupertinoPageRoute<void>(
                                   builder: (BuildContext context) {
-                                    return ArchiveTab();
+                                    return ArchiveTab(user: user);
                                   },
                                 ));
                               },
@@ -529,7 +520,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                 image: AssetImage('img/article_leaf.png')),
                           ),
                           Container(
-                            height: 350,
+                            height: 300,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius:
@@ -556,10 +547,10 @@ class __ArticleViewState extends State<_ArticleView> {
                                   ),
                                 ),
                                 Positioned(
-                                  left: 100,
+                                  left: 25,
                                   top: 20,
                                   child: Text(
-                                    "{Date Here}",
+                                    "${utils.formatDate(journalEntry.updatedAt)}",
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -570,7 +561,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                   left: 25,
                                   top: 75,
                                   child: Text(
-                                    "{Time Here}",
+                                    "${utils.formatTime(journalEntry.updatedAt)}",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
@@ -586,10 +577,10 @@ class __ArticleViewState extends State<_ArticleView> {
                                         color: Colors.white,
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: Offset(0, 3),
+                                            color: Colors.grey.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 1,
+                                            offset: Offset(0, -3),
                                           ),
                                         ],
                                         borderRadius: BorderRadius.all(
@@ -598,9 +589,9 @@ class __ArticleViewState extends State<_ArticleView> {
                                       children: <Widget>[
                                         Padding(
                                           padding: EdgeInsets.only(
-                                              top: 17, left: 17, right: 13),
+                                              top: 20, left: 35, right: 35),
                                           child: Text(
-                                            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,  Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minim",
+                                            journalEntry.text,
                                             style: TextStyle(
                                                 height: 1.3, fontSize: 20.0),
                                           ),
@@ -614,7 +605,7 @@ class __ArticleViewState extends State<_ArticleView> {
                           ),
                           Stack(
                             children: <Widget>[
-                              Padding(
+                              /*Padding(
                                 padding: EdgeInsets.only(top: 15),
                                 child: Center(
                                   child: Text(
@@ -626,7 +617,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              ),*/
                               Padding(
                                 padding: EdgeInsets.only(top: 40),
                                 child: Center(
@@ -653,29 +644,28 @@ class __ArticleViewState extends State<_ArticleView> {
                                 children: <Widget>[
                                   Positioned(
                                     top: 25,
-                                    left: 20,
+                                    left: 35,
+                                    right: 35,
                                     child: Text(
-                                      "Stress 101",
+                                      article.title,
                                       style: TextStyle(
-                                        fontSize: 40,
+                                        fontSize: 30,
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xFF525764),
                                       ),
                                     ),
                                   ),
-                                  Positioned(
-                                    top: 70,
-                                    left: 20,
-                                    child: InkWell(
+                                  Container(
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 32, bottom: 20),
                                       child: Text(
-                                        "Open Article",
+                                        "${article.url}",
                                         style: TextStyle(
-                                          fontSize: 25,
-                                          color: Color(0xFF525764),
+                                          fontSize: 12.0,
+                                          color: Color(0x44CEC9),
                                         ),
                                       ),
-                                      onTap: () =>
-                                          launch("https://www.google.com"),
                                     ),
                                   ),
                                 ],
@@ -685,26 +675,32 @@ class __ArticleViewState extends State<_ArticleView> {
                           Container(
                             height: 300,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                              //borderRadius: BorderRadius.all(Radius.circular(30))
+                            ),
                             child: ListView(
                               children: <Widget>[
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      top: 17, left: 17, right: 13),
-                                  child: Text(
-                                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,  Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minim",
-                                    style:
-                                        TextStyle(height: 1.3, fontSize: 20.0),
+                                      top: 30, left: 40, right: 40),
+                                  child: Container(
+                                    color: Colors.white,
+                                    height: 2000.0,
+                                    child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 20, top: 30, right: 20),
+                                        child: WebView(
+                                            initialUrl: article.url,
+                                            javascriptMode:
+                                                JavascriptMode.unrestricted)),
                                   ),
                                 ),
                               ],
@@ -726,23 +722,26 @@ class __ArticleViewState extends State<_ArticleView> {
 
 class Journal extends StatefulWidget {
   final JournalEntry journalEntry;
+  final User user;
 
-  const Journal({Key key, @required this.journalEntry}) : super(key: key);
+  const Journal({Key key, @required this.journalEntry, @required this.user})
+      : super(key: key);
 
   @override
-  _JournalState createState() => _JournalState(journalEntry);
+  _JournalState createState() => _JournalState(journalEntry, user);
 }
 
 class _JournalState extends State<Journal> {
   final JournalEntry journalEntry;
-  _JournalState(this.journalEntry);
+  final User user;
+  _JournalState(this.journalEntry, this.user);
   @override
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
         Navigator.of(context).push(CupertinoPageRoute<void>(
           builder: (BuildContext context) {
-            return _ArticleView();
+            return _ArticleView(journalEntry: journalEntry, user: user);
           },
         ));
       },
@@ -753,29 +752,29 @@ class _JournalState extends State<Journal> {
             width: 70,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(10),
-                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(15),
+                topRight: Radius.circular(15),
               ),
               image: DecorationImage(image: AssetImage('img/Capture.PNG')),
             ),
           ),
           Positioned(
-            top: 5,
-            left: 15,
+            top: 10,
+            left: 12,
             child: Text(
-              "10",
+              "${utils.getDay(journalEntry.createdAt)}",
               style: TextStyle(
                 color: Color(0xFF525764),
                 fontWeight: FontWeight.bold,
-                fontSize: 34.0,
+                fontSize: 27.0,
               ),
             ),
           ),
           Positioned(
-            bottom: 5,
-            left: 10,
+            bottom: 8,
+            left: 12,
             child: Text(
-              "10:20 am",
+              "${utils.formatTime(journalEntry.createdAt)}",
               style: TextStyle(
                 color: Color(0xFF525764),
                 fontWeight: FontWeight.bold,

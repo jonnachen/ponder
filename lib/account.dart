@@ -111,13 +111,13 @@ class _AccountTabState extends State<AccountTab> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 5),
-                            child: Text("💛 Angelina Saliling",
+                            child: Text("🙊 Angelina Saliling",
                                 style: TextStyle(
                                     fontSize: 20, color: Color(0xff525764))),
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 25),
-                            child: Text("Full stack developer",
+                            child: Text("Full stack Developer",
                                 style: TextStyle(
                                     fontSize: 18, color: Color(0xff525764))),
                           ),
@@ -147,7 +147,7 @@ class _AccountTabState extends State<AccountTab> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 5),
-                            child: Text("🦑 Emily Chin",
+                            child: Text("🌺 Emily Chin",
                                 style: TextStyle(
                                     fontSize: 20, color: Color(0xff525764))),
                           ),

@@ -9,3 +9,7 @@ String formatDate(date) {
 String formatTime(date) {
   return DateFormat.jm().format(date);
 }
+
+String getDay(date) {
+  return DateFormat.d().format(date);
+}

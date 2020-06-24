@@ -219,6 +219,18 @@ class _ArticleView extends StatelessWidget {
                               fontSize: 36.0,
                               color: Color(0XFF5E6472))))),
               Container(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 32, bottom: 20),
+                  child: Text(
+                    "${article.url}",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Color(0x44CEC9),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
                   color: Colors.white,
                   height: 2000.0,
                   child: //ListView(children: <Widget>[
@@ -241,8 +253,11 @@ class _ArticleView extends StatelessWidget {
                     //store entry here
 
                     //navigate to new page
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => _EndView()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                _EndView(user: user, article: article)));
                   },
                   color: Colors.white,
                   textColor: Color(0xff1A782E),
@@ -256,6 +271,12 @@ class _ArticleView extends StatelessWidget {
 }
 
 class _EndView extends StatelessWidget {
+  final User user;
+  final Article article;
+
+  _EndView({Key key, @required this.user, @required this.article})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -265,7 +286,7 @@ class _EndView extends StatelessWidget {
             ListView(children: <Widget>[
               Padding(
                   padding: EdgeInsets.only(top: 30, left: 30, right: 30),
-                  child: Text("Today is January 13, 2020.",
+                  child: Text("Today is ${utils.formatDate(DateTime.now())}.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Color(0xFF525764),
@@ -318,7 +339,7 @@ class _EndView extends StatelessWidget {
                               bottomLeft: Radius.circular(20.0),
                               bottomRight: Radius.circular(20.0))),
                       child: Center(
-                          child: Text("Stress 101",
+                          child: Text(article.title,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 18.0, color: Color(0xff5E6472)))))),
@@ -331,7 +352,7 @@ class _EndView extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute<void>(
                       builder: (BuildContext context) {
-                        return _AddEntryView();
+                        return _AddEntryView(user: user);
                       },
                     ));
                   },
@@ -339,7 +360,7 @@ class _EndView extends StatelessWidget {
                   textColor: Color(0xff1A782E),
                   child: Padding(
                       padding: EdgeInsets.all(15.0),
-                      child: Text("+ another entry",
+                      child: Text("+ New Entry",
                           style: TextStyle(fontSize: 20.0))),
                 ),
               )
