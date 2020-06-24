@@ -44,50 +44,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
   bool error = false;
   bool loading = false;
 
-  final Map<String, double> intentStrengthes = {
-    'anger': 0.0,
-    'anxiety': 0.0,
-    'depression': 0.0,
-    'happy': 0.0,
-    'health': 0.0,
-    'productivity': 0.0,
-    'sleep': 0.0
-  };
-
-  double maxStrength = 0.0;
-  String strongestIntent = 'productivity';
-
-  updateStrength(intent) {
-    intentStrengthes[intent.name] =
-        intentStrengthes[intent.name] + intent.confidence;
-    if (intentStrengthes[intent.name] >= maxStrength) {
-      maxStrength = intentStrengthes[intent.name];
-      strongestIntent = intent.name;
-    }
-  }
-
-  getIntent(intents) {
-    intents.forEach((intent) => updateStrength(intent));
-    print(strongestIntent);
-    return strongestIntent;
-  }
-
-  Future<Article> getArticle(intentName, user) async {
-    String queryParams =
-        "?user=${user.id as String}&intentName=${intentName as String}";
-    final http.Response response = await http
-        .get(routes.path + 'articles/' + queryParams, headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
-
-    if (response.statusCode == 200) {
-      return Article.fromJson(json.decode(response.body)['article']);
-    } else {
-      throw new Exception(json.decode(response.body)['error']);
-    }
-  }
-
-  Future<JournalEntry> createJournalEntry(user) async {
+  Future<Article> createJournalEntry(user) async {
     final text = entryController.text;
     setState(() {
       loading = true;
@@ -105,7 +62,7 @@ class _AddEntryViewState extends State<_AddEntryView> {
     );
 
     if (response.statusCode == 200) {
-      return JournalEntry.fromJson(json.decode(response.body)['journal']);
+      return Article.fromJson(json.decode(response.body)['article']);
     } else {
       setState(() {
         loading = false;
@@ -196,19 +153,12 @@ class _AddEntryViewState extends State<_AddEntryView> {
                   ),
                   onPressed: () {
                     //store entry here
-                    createJournalEntry(user).then((journalEntry) {
-                      //navigate to new page
-                      print("coffee");
-                      var intentName = getIntent(journalEntry.intents);
-
-                      getArticle(intentName, user).then((article) {
-                        print(article);
-                        Navigator.of(context).push(CupertinoPageRoute<void>(
-                          builder: (BuildContext context) {
-                            return _ArticleView(user: user, article: article);
-                          },
-                        ));
-                      });
+                    createJournalEntry(user).then((article) {
+                      Navigator.of(context).push(CupertinoPageRoute<void>(
+                        builder: (BuildContext context) {
+                          return _ArticleView(user: user, article: article);
+                        },
+                      ));
                     });
                   },
                   color: Colors.white,

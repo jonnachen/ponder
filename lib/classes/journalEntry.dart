@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'article.dart';
 
 class Intent {
   String name;
@@ -20,6 +21,7 @@ class Intent {
 class JournalEntry {
   String id;
   String text;
+  Article article;
   double positivityScore;
   List<Intent> intents;
   DateTime createdAt;
@@ -30,6 +32,7 @@ class JournalEntry {
       this.text,
       this.positivityScore,
       this.intents,
+      this.article,
       this.createdAt,
       this.updatedAt});
 
@@ -44,6 +47,7 @@ class JournalEntry {
             ? json['positivityScore'].toDouble()
             : 0.0,
         intents: intents,
+        article: Article.fromJson(json['article']),
         createdAt: DateTime.parse(json['createdAt']),
         updatedAt: DateTime.parse(json['updatedAt']));
   }
@@ -53,6 +57,7 @@ class JournalEntry {
         'text': text,
         'positivityScore': jsonEncode(positivityScore),
         'intents': jsonEncode(intents),
+        'article': jsonEncode(article),
         'createdAt': jsonEncode(createdAt.toIso8601String()),
         'updatedAt': jsonEncode(updatedAt.toIso8601String())
       };

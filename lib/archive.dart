@@ -178,7 +178,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             Padding(
                               padding: EdgeInsets.only(left: 25),
                               child: Text(
-                                "February",
+                                "May 2020",
                                 style: TextStyle(
                                   color: Color(0xFF525764),
                                   fontWeight: FontWeight.bold,
@@ -200,8 +200,8 @@ class _ArchiveTabState extends State<ArchiveTab> {
                               child: GridView.count(
                                 crossAxisCount: 4,
                                 children: <Widget>[
-                                  for (var journal in user.journals)
-                                    Journal(journalEntry: journal)
+                                  for (var i = 0; i < 5; i++)
+                                    Journal(journalEntry: user.journals[i])
                                 ],
                               ),
                             ),
@@ -218,7 +218,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
                             Padding(
                               padding: EdgeInsets.only(left: 25),
                               child: Text(
-                                "March",
+                                "April 2020",
                                 style: TextStyle(
                                   color: Color(0xFF525764),
                                   fontWeight: FontWeight.bold,
@@ -240,8 +240,8 @@ class _ArchiveTabState extends State<ArchiveTab> {
                               child: GridView.count(
                                 crossAxisCount: 4,
                                 children: <Widget>[
-                                  for (var journal in user.journals)
-                                    Journal(journalEntry: journal)
+                                  for (var i = 0; i < 3; i++)
+                                    Journal(journalEntry: user.journals[i])
                                 ],
                               ),
                             ),
