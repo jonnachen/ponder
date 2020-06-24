@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'homepage.dart';
-import 'package:url_launcher/url_launcher.dart';
-//
+//import 'package:url_launcher/url_launcher.dart';
+
 
 class ArchiveTab extends StatefulWidget {
   @override
@@ -21,31 +21,6 @@ class _ArchiveTabState extends State<ArchiveTab> {
             color: Color(0xFFD4FFFF),
             child: ListView(
               children: [
-                Container(
-                  color: Color(0xFFD4FFFF),
-                  padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                  child: new Container(
-                    child: new Center(
-                      child: new Column(children: [
-                        new TextFormField(
-                          decoration: new InputDecoration(
-                            contentPadding:
-                            EdgeInsets.only(left: 20, top: -10, bottom: -10),
-                            labelStyle: TextStyle(
-                                fontSize: 23, color: Color(0xFFC4C4C4)),
-                            labelText: "Search",
-                            icon: Icon(Icons.search),
-                            fillColor: Colors.white,
-                            border: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(50.0),
-                              borderSide: new BorderSide(),
-                            ),
-                          ),
-                        ),
-                      ]),
-                    ),
-                  ),
-                ),
                 Padding(
                   padding: EdgeInsets.only( top: 15, right: 32),
                   child: Container(
@@ -125,6 +100,8 @@ class _ArchiveTabState extends State<ArchiveTab> {
                                 ),
                               ),
                               child: GridView.count(
+                                mainAxisSpacing: 0,
+                                crossAxisSpacing:0,
                                 crossAxisCount: 4,
                                 children: <Widget>[
                                   Journal(),
@@ -233,31 +210,6 @@ class _ArchiveTabState extends State<ArchiveTab> {
             color: Color(0xFFD4FFFF),
             child: ListView(
               children: [
-                Container(
-                  color: Color(0xFFD4FFFF),
-                  padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                  child: new Container(
-                    child: new Center(
-                      child: new Column(children: [
-                        new TextFormField(
-                          decoration: new InputDecoration(
-                            contentPadding:
-                            EdgeInsets.only(left: 20, top: -10, bottom: -10),
-                            labelStyle: TextStyle(
-                                fontSize: 23, color: Color(0xFFC4C4C4)),
-                            labelText: "Search",
-                            icon: Icon(Icons.search),
-                            fillColor: Colors.white,
-                            border: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(50.0),
-                              borderSide: new BorderSide(),
-                            ),
-                          ),
-                        ),
-                      ]),
-                    ),
-                  ),
-                ),
                 Padding(
                   padding: EdgeInsets.only( top: 15),
                   child: Container(
@@ -503,7 +455,7 @@ class __ArticleViewState extends State<_ArticleView> {
                             ),
                           ),
                           Container(
-                            height: 350,
+                            height: 300,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -557,10 +509,10 @@ class __ArticleViewState extends State<_ArticleView> {
                                         color: Colors.white,
                                         boxShadow:[
                                           BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 5,
-                                            blurRadius:7,
-                                            offset:Offset(0,3),
+                                            color: Colors.grey.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius:1,
+                                            offset:Offset(0,-3),
                                           ),
                                         ],
                                         borderRadius: BorderRadius.all(Radius.circular(30))
@@ -568,7 +520,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                     child: ListView(
                                       children: <Widget>[
                                         Padding(
-                                          padding: EdgeInsets.only(top:17,left:17,right:13),
+                                          padding: EdgeInsets.only(top:20,left:35,right:35),
                                           child: Text("Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,  Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minim",
                                             style: TextStyle(
                                                 height:1.3,
@@ -623,7 +575,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                 children: <Widget> [
                                   Positioned(
                                     top: 25,
-                                    left: 20,
+                                    left: 35,
                                     child: Text("Stress 101",
                                       style: TextStyle(
                                         fontSize:40,
@@ -634,7 +586,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                   ),
                                   Positioned(
                                     top:70,
-                                    left:20,
+                                    left:25,
                                     child: InkWell(
                                       child: Text("Open Article",
                                         style: TextStyle(
@@ -642,7 +594,7 @@ class __ArticleViewState extends State<_ArticleView> {
                                           color: Color(0xFF525764),
                                         ),
                                       ),
-                                      onTap:() => launch("https://www.google.com"),
+                                      //onTap:() => launch("https://www.google.com"),
                                     ),
                                   ),
                                 ],
@@ -661,12 +613,12 @@ class __ArticleViewState extends State<_ArticleView> {
                                     offset:Offset(0,3),
                                   ),
                                 ],
-                                borderRadius: BorderRadius.all(Radius.circular(30))
+                                //borderRadius: BorderRadius.all(Radius.circular(30))
                             ),
                             child: ListView(
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.only(top:17,left:17,right:13),
+                                  padding: EdgeInsets.only(top:30,left:40,right:40),
                                   child: Text("Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,  Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minim",
                                     style: TextStyle(
                                         height:1.3,
@@ -719,34 +671,34 @@ class _JournalState extends State<Journal> {
             width:70,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(10),
-                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(15),
+                topRight: Radius.circular(15),
               ),
               image: DecorationImage(
-                  image:AssetImage('img/Capture.png')
+                  image:AssetImage('img/Capture.PNG')
               ),
             ),
           ),
           Positioned(
-            top:5,
-            left:15,
+            top:10,
+            left:12,
 
             child: Text("10",
               style: TextStyle(
                 color: Color(0xFF525764),
                 fontWeight: FontWeight.bold,
-                fontSize: 34.0,
+                fontSize: 27.0,
               ),
             ),
           ),
           Positioned(
-            bottom: 5,
-            left: 10,
+            bottom: 8,
+            left: 12,
             child: Text("10:20 am",
               style: TextStyle(
                 color: Color(0xFF525764),
                 fontWeight: FontWeight.bold,
-                fontSize: 13.0,
+                fontSize: 10.0,
               ),
             ),
           ),
