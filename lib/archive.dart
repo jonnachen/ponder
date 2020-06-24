@@ -25,6 +25,7 @@ class _ArchiveTabState extends State<ArchiveTab> {
     setState(() {
       loading = true;
     });
+    if (user.journals.length == 0) return;
     user.journals.forEach((journalEntry) {
       //  DateFormat.yMMMM is the month and day of the entry
       String formattedDate =
@@ -46,8 +47,10 @@ class _ArchiveTabState extends State<ArchiveTab> {
   @override
   Widget build(BuildContext context) {
     final user = widget.user;
-    processJournals(user);
-    var dates = journals.keys.toList();
+    if (user.journals != null && user.journals.length != 0)
+      processJournals(user);
+    print(journals);
+    var dates = journals.isEmpty ? [] : journals.keys.toList();
     return Scaffold(
       body: PageView(
         children: [
@@ -55,212 +58,126 @@ class _ArchiveTabState extends State<ArchiveTab> {
             color: Color(0xFFD4FFFF),
             child: ListView(
               children: [
-                loading
-                    ? CircularProgressIndicator()
-                    : Container(
-                        color: Color(0xFFD4FFFF),
-                        padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                        child: new Container(
-                          child: new Center(
-                            child: new Column(children: [
-                              new TextFormField(
-                                decoration: new InputDecoration(
-                                  contentPadding: EdgeInsets.only(
-                                      left: 20, top: -10, bottom: -10),
-                                  labelStyle: TextStyle(
-                                      fontSize: 23, color: Color(0xFFC4C4C4)),
-                                  labelText: "Search",
-                                  icon: Icon(Icons.search),
-                                  fillColor: Colors.white,
-                                  border: new OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(50.0),
-                                    borderSide: new BorderSide(),
-                                  ),
+                dates.length == 0
+                    ? Padding(
+                        padding:
+                            EdgeInsets.only(top: 30, left: 100, right: 100),
+                        child: Text(
+                          "This is where you will see your journal entries.",
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      )
+                    : loading
+                        ? CircularProgressIndicator()
+                        : Container(
+                            color: Color(0xFFD4FFFF),
+                            padding:
+                                EdgeInsets.only(top: 10, left: 10, right: 10),
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 15, right: 32),
+                              child: Container(
+                                color: Color(0xFFD4FFFF),
+                                height: 50.0,
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment(0.75, -1),
+                                      child: Container(
+                                        padding: EdgeInsets.only(left: 32),
+                                        child: Text(
+                                          "Favorites",
+                                          style: TextStyle(
+                                              letterSpacing: 1.4,
+                                              color: Color(0xFF5E6472),
+                                              fontSize: 25.0),
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment(-0.75, -1),
+                                      child: Container(
+                                        padding: EdgeInsets.only(left: 32),
+                                        child: Text(
+                                          "Archive",
+                                          style: TextStyle(
+                                              letterSpacing: 1.4,
+                                              color: Color(0xFF5E6472),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 25.0),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 35.0,
+                                      child: new Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        height: 3,
+                                        decoration: new BoxDecoration(
+                                            color: Color(0xFF5E6472)),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ]),
-                          ),
-                        ),
-                      ),
-                Padding(
-                  padding: EdgeInsets.only(top: 15, right: 32),
-                  child: Container(
-                    color: Color(0xFFD4FFFF),
-                    height: 50.0,
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment(0.75, -1),
-                          child: Container(
-                            padding: EdgeInsets.only(left: 32),
-                            child: Text(
-                              "Favorites",
-                              style: TextStyle(
-                                  letterSpacing: 1.4,
-                                  color: Color(0xFF5E6472),
-                                  fontSize: 25.0),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment(-0.75, -1),
-                          child: Container(
-                            padding: EdgeInsets.only(left: 32),
-                            child: Text(
-                              "Archive",
-                              style: TextStyle(
-                                  letterSpacing: 1.4,
-                                  color: Color(0xFF5E6472),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25.0),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 35.0,
-                          child: new Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            height: 3,
-                            decoration:
-                                new BoxDecoration(color: Color(0xFF5E6472)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                            )),
                 Container(
                   height: 600,
                   child: ListView(
                     children: [
-                      Container(
-                        width: 200,
-                        height: 300,
-                        padding: EdgeInsets.only(top: 15),
-                        child: ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 25),
-                              child: Text(
-                                dates[0],
-                                style: TextStyle(
-                                  color: Color(0xFF525764),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 40.0,
-                                ),
-                              ),
-                            ),
-                            Container(
+                      dates.length != 0
+                          ? Container(
                               width: 200,
-                              height: 230,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFC2F9BB),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(30),
-                                  bottomRight: Radius.circular(30),
-                                ),
-                              ),
-                              child: GridView.count(
-                                mainAxisSpacing: 0,
-                                crossAxisSpacing: 0,
-                                crossAxisCount: 4,
+                              height: 300,
+                              padding: EdgeInsets.only(top: 15),
+                              child: ListView(
+                                physics: const NeverScrollableScrollPhysics(),
                                 children: <Widget>[
-                                  for (var journal in journals[dates[0]])
-                                    journal
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 25),
+                                    child: Text(
+                                      dates[0],
+                                      style: TextStyle(
+                                        color: Color(0xFF525764),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 40.0,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 200,
+                                    height: 230,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFC2F9BB),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30),
+                                        topRight: Radius.circular(30),
+                                        bottomLeft: Radius.circular(30),
+                                        bottomRight: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: GridView.count(
+                                      mainAxisSpacing: 0,
+                                      crossAxisSpacing: 0,
+                                      crossAxisCount: 4,
+                                      children: <Widget>[
+                                        for (var journal in journals[dates[0]])
+                                          journal
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 200,
-                        height: 300,
-                        padding: EdgeInsets.only(top: 15),
-                        child: ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 25),
+                            )
+                          : Padding(
+                              padding: EdgeInsets.only(
+                                  top: 30, left: 100, right: 100),
                               child: Text(
-                                "May 2020",
-                                style: TextStyle(
-                                  color: Color(0xFF525764),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 40.0,
-                                ),
+                                "Nothing here yet! Get writing some journal entries :)",
+                                style: TextStyle(fontSize: 20.0),
                               ),
-                            ),
-                            Container(
-                              width: 200,
-                              height: 230,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFAED9E0),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30),
-                                    bottomRight: Radius.circular(30),
-                                    bottomLeft: Radius.circular(30)),
-                              ),
-                              child: GridView.count(
-                                crossAxisCount: 4,
-                                children: <Widget>[
-                                  for (var i = 0; i < 5; i++)
-                                    Journal(
-                                        journalEntry: user.journals[i],
-                                        user: user)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 200,
-                        height: 300,
-                        padding: EdgeInsets.only(top: 15),
-                        child: ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 25),
-                              child: Text(
-                                "April 2020",
-                                style: TextStyle(
-                                  color: Color(0xFF525764),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 40.0,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 200,
-                              height: 230,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFFED3D3),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30),
-                                    bottomRight: Radius.circular(30),
-                                    bottomLeft: Radius.circular(30)),
-                              ),
-                              child: GridView.count(
-                                crossAxisCount: 4,
-                                children: <Widget>[
-                                  for (var i = 0; i < 3; i++)
-                                    Journal(
-                                        journalEntry: user.journals[i],
-                                        user: user)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                            )
                     ],
                   ),
                 ),

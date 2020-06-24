@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'classes/user.dart';
 
 class AccountTab extends StatefulWidget {
   final User user;
+  final logout;
 
-  const AccountTab({Key key, @required this.user}) : super(key: key);
+  const AccountTab({Key key, @required this.user, @required this.logout})
+      : super(key: key);
 
   @override
   _AccountTabState createState() {
@@ -17,6 +20,7 @@ class _AccountTabState extends State<AccountTab> {
   @override
   Widget build(BuildContext context) {
     final user = widget.user;
+    final logout = widget.logout;
     return new Scaffold(
       backgroundColor: Color(0xFFD4FFFF),
       body: ListView(
@@ -62,6 +66,36 @@ class _AccountTabState extends State<AccountTab> {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color(0xff525764)))),
+          Center(
+              child: FlatButton(
+                  onPressed: () => {logout(context)},
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Container(
+                      width: 150,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 7,
+                              offset: Offset(2.5, 4),
+                            ),
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(70))),
+                      child: Center(
+                          child: Text(
+                        "logout",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF525764),
+                        ),
+                      )),
+                    ),
+                  ))),
           Padding(
               padding: EdgeInsets.only(top: 20, left: 30),
               child: Text("About Us",
