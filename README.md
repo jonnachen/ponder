@@ -1,5 +1,7 @@
 # Ponder - a journal app that uses Wit.Ai to recommend tailored articles for mental health and self-improvement
 
+![Ponder Cover Photo](img/cover.jpg)
+
 This project was submitted to the <strong>2020 Online Facebook AI Hackathon</strong>. Our Devpost submission can be found <a href="https://devpost.com/software/ponder-tiw5y3">here</a>, and our pitch video can be found <a href="https://youtu.be/S9EuC72BRVw">here</a>.
 
 ## Inspiration
