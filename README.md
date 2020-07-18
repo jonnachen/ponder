@@ -56,8 +56,10 @@ Once you have a simulator up and flutter installed, type flutter run in the proj
 
 APK Files here: https://github.com/jonnachen/ponder_front/tree/master/apk
 
-For a sample user use this account:
-username: steven
-password: broski123
-
 <em>Favorites feature only functional after user logs out and logs back in.</em>
+
+## Sample use for testing:
+
+username: steven
+
+password: broski123
